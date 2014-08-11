@@ -1,11 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.MonoForAndroid_API_15" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ChiVball\Pages\MainPage.cs">
     <Files>
-      <File FileName="Android\MainActivity.cs" Line="1" Column="1" />
-      <File FileName="ChiVball\packages.config" Line="1" Column="1" />
-      <File FileName="ChiVball\App.cs" Line="27" Column="27" />
-      <File FileName="ChiVball\Pages\MainPage.cs" Line="6" Column="6" />
+      <File FileName="ChiVball\Helpers\Controls\CustomMap.cs" Line="1" Column="1" />
+      <File FileName="ChiVball\Helpers\Controls\CustomPin.cs" Line="1" Column="1" />
+      <File FileName="ChiVball\Pages\MainPage.cs" Line="48" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -20,6 +20,7 @@ namespace ChiVball.Android
 		{
 			base.OnCreate (bundle);
 
+			Xamarin.FormsMaps.Init (this, bundle);
 			Xamarin.Forms.Forms.Init (this, bundle);
 
 			SetPage (App.GetMainPage ());
