@@ -54,7 +54,8 @@ namespace ChiVball
 				_map.CustomPins.Add (new CustomPin {
 					Label = "Pin " + i, 
 					Address = "Address " + i,
-					Position = new Position (latitude, longitude)
+					Position = new Position (latitude, longitude),
+					PinIcon = "CarWashMapIcon"
 				});
 			}
 

@@ -47,20 +47,34 @@ namespace ShouldIWashMyCar.Android
 			}
 		}
 
+		Marker _previouslySelectedMarker {
+			get;
+			set;
+		}
+
 		void HandleMarkerClick (object sender, GoogleMap.MarkerClickEventArgs e)
 		{
-			var marker = e.Marker;
-//			marker.ShowInfoWindow ();
+			if (_previouslySelectedMarker != null) {
+				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", "CarWashMapIcon"))); 
+				_previouslySelectedMarker = null;
+			}
+
+			var currentMarker = e.Marker;
+
+			currentMarker.SetIcon (BitmapDescriptorFactory.DefaultMarker ());
 
 			var myMap = this.Element as CustomMap;
 
+
 			var formsPin = new CustomPin {
-				Label = marker.Title,
-				Address = marker.Snippet,
-				Position = new Position (marker.Position.Latitude, marker.Position.Longitude)
+				Label = currentMarker.Title,
+				Address = currentMarker.Snippet,
+				Position = new Position (currentMarker.Position.Latitude, currentMarker.Position.Longitude)
 			};
 
 			myMap.SelectedPin = formsPin;
+
+			_previouslySelectedMarker = currentMarker;
 		}
 
 		protected override void OnLayout (bool changed, int l, int t, int r, int b)

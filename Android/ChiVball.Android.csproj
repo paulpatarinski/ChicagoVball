@@ -99,4 +99,7 @@
   <ItemGroup>
     <Folder Include="Renderers\" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\CarWashMapIcon.png" />
+  </ItemGroup>
 </Project>
