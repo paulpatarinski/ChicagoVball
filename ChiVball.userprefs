@@ -1,4 +1,4 @@
-﻿<Properties>
+﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.MonoForAndroid_API_15" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Android\Renderers\MapViewRenderer.cs">
     <Files>

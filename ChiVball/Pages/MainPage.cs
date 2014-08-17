@@ -13,11 +13,10 @@ namespace ChiVball
 			var mainGrid = new Grid {
 				RowDefinitions = new RowDefinitionCollection {
 					new RowDefinition {
-						Height = new GridLength (0.88, GridUnitType.Star)
-
+						Height = new GridLength (0.87, GridUnitType.Star)
 					},
 					new RowDefinition {
-						Height = new GridLength (0.12, GridUnitType.Star)
+						Height = new GridLength (0.13, GridUnitType.Star)
 					},
 				},
 				ColumnDefinitions = new ColumnDefinitionCollection {
@@ -28,9 +27,11 @@ namespace ChiVball
 			};
 
 			var map = CreateMap ();
-			mainGrid.Children.Add (map, 0, 0);
 
+			mainGrid.Children.Add (map, 0, 0);
 			Grid.SetRowSpan (map, 2);
+			mainGrid.RowSpacing = 0;
+
 			mainGrid.Children.Add (CreateFooter (), 0, 1);
 
 			Content = mainGrid;
@@ -68,10 +69,27 @@ namespace ChiVball
 
 		View CreateFooter ()
 		{
+			var footerGrid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.75, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.25, GridUnitType.Star)
+					},
+				}
+			};
+
 			var placeNameLabel = new Label {
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.Center,
-				Text = "Pin Label Shows Here" 
+				Text = "Pin Label Shows Here",
+				TextColor = Color.Black,
+				Font = Font.SystemFontOfSize (22)
+
 			};
 
 			placeNameLabel.BindingContext = _map;
@@ -79,8 +97,6 @@ namespace ChiVball
 
 
 			var detailsLabel = new Label {
-				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.Center,
 				Text = "Address Shows Here"
 			};
 
@@ -88,14 +104,47 @@ namespace ChiVball
 			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
 
 
-			var footerStackLayout = new StackLayout { BackgroundColor = Colors.TransparentWhite
+			var pinInfoStackLayout = new StackLayout { Padding = new Thickness (25, 8, 0, 0)	};
+
+			pinInfoStackLayout.Children.Add (placeNameLabel);
+			pinInfoStackLayout.Children.Add (detailsLabel);
+			pinInfoStackLayout.Spacing = 0;
+
+			var navigationIconGrid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (0.72, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.28, GridUnitType.Star)
+					},
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (1, GridUnitType.Star)
+					}
+				},
+				VerticalOptions = LayoutOptions.Start,
 			};
 
-			footerStackLayout.Children.Add (placeNameLabel);
-			footerStackLayout.Children.Add (detailsLabel);
+			var navigationIconImage = new Image { Source = "NavigateIcon", HeightRequest = 50 };
 
+			var navigationTimeLabel = new Label {
+				Text = "10 min", TextColor = Color.FromHex ("FF3A84DF"),
+				Font = Font.SystemFontOfSize (13),
+				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.Start
+			};
 
-			return new ContentView{ Content = footerStackLayout };
+			navigationIconGrid.Children.Add (navigationIconImage, 0, 0);
+			navigationIconGrid.Children.Add (navigationTimeLabel, 0, 1);
+			navigationIconGrid.RowSpacing = 1;
+			Grid.SetRowSpan (navigationIconImage, 2);
+
+			footerGrid.Children.Add (pinInfoStackLayout, 0, 0);
+			footerGrid.Children.Add (navigationIconGrid, 1, 0);
+
+			return new ContentView{ Content = footerGrid, BackgroundColor = Colors.TransparentWhite };
 		}
 	}
 }

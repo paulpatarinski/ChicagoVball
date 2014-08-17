@@ -1129,10 +1129,13 @@ namespace ChiVball.Android
 			public const int mr_ic_media_route_on_holo_light = 2130837636;
 			
 			// aapt resource value: 0x7f020085
-			public const int powered_by_google_dark = 2130837637;
+			public const int NavigateIcon = 2130837637;
 			
 			// aapt resource value: 0x7f020086
-			public const int powered_by_google_light = 2130837638;
+			public const int powered_by_google_dark = 2130837638;
+			
+			// aapt resource value: 0x7f020087
+			public const int powered_by_google_light = 2130837639;
 			
 			static Drawable()
 			{
