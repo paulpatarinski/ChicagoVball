@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms.Maps;
+﻿using Xamarin.Forms.Maps;
 
 namespace Core
 {
@@ -11,7 +10,7 @@ namespace Core
 
 		public string PinIcon { get; set; }
 
-		public Xamarin.Forms.Maps.Position Position { get; set; }
+		public Position Position { get; set; }
 
 	}
 }

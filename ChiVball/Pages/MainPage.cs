@@ -24,7 +24,6 @@ namespace ChiVball
 				}
 			};
 
-
 			mainGrid.Children.Add (CreateMap (), 0, 0);
 			mainGrid.Children.Add (CreateFooter (), 0, 1);
 			Content = mainGrid;
@@ -35,16 +34,14 @@ namespace ChiVball
 			set;
 		}
 
-		private View CreateMap ()
+		View CreateMap ()
 		{
-
 			var latitude = 43.0714;
 			var longitude = -89.3932;
 
 			var location = new Position (latitude, longitude);
 
-			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (10))) {
-			};
+			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (10)));
 
 
 			for (int i = 1; i <= 10; i++) {
@@ -63,13 +60,13 @@ namespace ChiVball
 			return new ContentView (){ Content = _map };
 		}
 
-		private View CreateFooter ()
+		View CreateFooter ()
 		{
 
 			var placeNameLabel = new Label {
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center,
-				Text = "My Cool Label"
+				Text = "Pin Label Shows Here" 
 			};
 
 			placeNameLabel.BindingContext = _map;
@@ -79,7 +76,7 @@ namespace ChiVball
 			var detailsLabel = new Label {
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center,
-				Text = "My Cool Label"
+				Text = "Address Shows Here"
 			};
 
 			detailsLabel.BindingContext = _map;
