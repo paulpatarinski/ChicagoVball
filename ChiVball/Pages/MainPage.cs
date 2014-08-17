@@ -8,13 +8,16 @@ namespace ChiVball
 	{
 		public MainPage ()
 		{
+			BackgroundColor = Color.White;
+
 			var mainGrid = new Grid {
 				RowDefinitions = new RowDefinitionCollection {
 					new RowDefinition {
-						Height = new GridLength (0.9, GridUnitType.Star)
+						Height = new GridLength (0.88, GridUnitType.Star)
+
 					},
 					new RowDefinition {
-						Height = new GridLength (0.1, GridUnitType.Star)
+						Height = new GridLength (0.12, GridUnitType.Star)
 					},
 				},
 				ColumnDefinitions = new ColumnDefinitionCollection {
@@ -24,8 +27,12 @@ namespace ChiVball
 				}
 			};
 
-			mainGrid.Children.Add (CreateMap (), 0, 0);
+			var map = CreateMap ();
+			mainGrid.Children.Add (map, 0, 0);
+
+			Grid.SetRowSpan (map, 2);
 			mainGrid.Children.Add (CreateFooter (), 0, 1);
+
 			Content = mainGrid;
 		}
 
@@ -41,8 +48,7 @@ namespace ChiVball
 
 			var location = new Position (latitude, longitude);
 
-			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (10)));
-
+			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (10))){ };
 
 			for (int i = 1; i <= 10; i++) {
 
@@ -62,7 +68,6 @@ namespace ChiVball
 
 		View CreateFooter ()
 		{
-
 			var placeNameLabel = new Label {
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center,
@@ -82,7 +87,8 @@ namespace ChiVball
 			detailsLabel.BindingContext = _map;
 			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
 
-			var footerStackLayout = new StackLayout { 
+
+			var footerStackLayout = new StackLayout { BackgroundColor = Colors.TransparentWhite
 			};
 
 			footerStackLayout.Children.Add (placeNameLabel);

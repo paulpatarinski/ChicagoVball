@@ -25,6 +25,9 @@ namespace ShouldIWashMyCar.Android
 				androidMapView.Map.MarkerClick += HandleMarkerClick;
 				androidMapView.Map.MyLocationEnabled = formsMap.IsShowingUser;
 
+				//The footer overlays the zoom controls
+				androidMapView.Map.UiSettings.ZoomControlsEnabled = false;
+
 				var formsPins = formsMap.CustomPins;
 
 				foreach (var formsPin in formsPins) {
