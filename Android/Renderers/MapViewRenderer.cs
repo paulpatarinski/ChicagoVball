@@ -6,8 +6,8 @@ using Android.Gms.Maps.Model;
 using Xamarin.Forms.Maps;
 using Core;
 
-[assembly: ExportRenderer (typeof(Core.CustomMap), typeof(ShouldIWashMyCar.Android.MapViewRenderer))]
-namespace ShouldIWashMyCar.Android
+[assembly: ExportRenderer (typeof(Core.CustomMap), typeof(Android.MapViewRenderer))]
+namespace Android
 {
 	public class MapViewRenderer : MapRenderer
 	{

@@ -13,7 +13,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace ChiVball.Android
 {
-	[Activity (Label = "ChiVball.Android.Android", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity (MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : AndroidActivity
 	{
 		protected override void OnCreate (Bundle bundle)

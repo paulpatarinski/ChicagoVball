@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.03cfb437437cd4ac" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Android\Renderers\MapViewRenderer.cs">
     <Files>
-      <File FileName="Android\Renderers\MapViewRenderer.cs" Line="53" Column="53" />
+      <File FileName="Android\Renderers\MapViewRenderer.cs" Line="4" Column="4" />
       <File FileName="Core\Helpers\Controls\CustomMap.cs" Line="130" Column="130" />
       <File FileName="Core\Pages\MainPage.cs" Line="48" Column="48" />
     </Files>
@@ -12,6 +12,7 @@
           <Node name="Android" expanded="True" selected="True">
             <Node name="Renderers" expanded="True" />
           </Node>
+          <Node name="Core" expanded="True" />
         </State>
       </Pad>
     </Pads>
