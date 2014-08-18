@@ -48,12 +48,13 @@ namespace ChiVball
 
 		View CreateMap ()
 		{
-			var latitude = 43.0714;
-			var longitude = -89.3932;
+			//Coordinates for the starting point of the map
+			const double latitude = 41.951692;
+			const double longitude = -87.993720;
 
 			var location = new Position (latitude, longitude);
 
-			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (10))){ };
+			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (40))){ IsShowingUser = true };
 
 			for (int i = 1; i <= 10; i++) {
 
