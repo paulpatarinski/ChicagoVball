@@ -2,7 +2,7 @@
 
 namespace Core
 {
-	public class Icons
+	public static class Icons
 	{
 		public static string CrazyRobot { get { return "CrazyRobot"; } }
 	}

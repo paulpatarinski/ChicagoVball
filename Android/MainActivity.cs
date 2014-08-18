@@ -1,15 +1,12 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 
 using Xamarin.Forms.Platform.Android;
 using Core;
+using Android.Net;
 
 
 namespace ChiVball.Android
@@ -25,6 +22,14 @@ namespace ChiVball.Android
 			Xamarin.Forms.Forms.Init (this, bundle);
 
 			SetPage (App.GetMainPage ());
+
+		}
+
+		public  void LaunchGoogleMaps (string address)
+		{
+			var geoUri = Uri.Parse (string.Format ("geo:0,0?q={0}", address));
+			var mapIntent = new Intent (Intent.ActionView, geoUri);
+			StartActivity (mapIntent);
 		}
 	}
 }

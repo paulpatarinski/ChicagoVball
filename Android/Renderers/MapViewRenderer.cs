@@ -6,6 +6,8 @@ using Android.Gms.Maps.Model;
 using Xamarin.Forms.Maps;
 using Core;
 using Core.Helpers.Controls;
+using Android.Content;
+using ChiVball.Android;
 
 [assembly: ExportRenderer (typeof(Core.Helpers.Controls.CustomMap), typeof(Android.MapViewRenderer))]
 namespace Android
@@ -21,9 +23,11 @@ namespace Android
 			var androidMapView = (MapView)Control;
 			var formsMap = (CustomMap)sender;
 			 
+
 			if (e.PropertyName.Equals ("VisibleRegion") && !_isDrawnDone) {
 				androidMapView.Map.Clear ();
 
+				formsMap.NavigationButton.Clicked += NavigationButtonClicked;
 				androidMapView.Map.MarkerClick += HandleMarkerClick;
 				androidMapView.Map.MapClick += HandleMapClick;
 				androidMapView.Map.MyLocationEnabled = formsMap.IsShowingUser;
@@ -55,6 +59,14 @@ namespace Android
 		Marker _previouslySelectedMarker {
 			get;
 			set;
+		}
+
+		void NavigationButtonClicked (object sender, EventArgs e)
+		{
+			var activity = this.Context as MainActivity;
+
+			if (activity != null)
+				activity.LaunchGoogleMaps (_previouslySelectedMarker.Snippet);
 		}
 
 		void HandleMapClick (object sender, GoogleMap.MapClickEventArgs e)
@@ -90,6 +102,8 @@ namespace Android
 				Address = currentMarker.Snippet,
 				Position = new Position (currentMarker.Position.Latitude, currentMarker.Position.Longitude)
 			};
+
+		
 
 			customMapControl.SelectedPin = formsPin;
 			customMapControl.ShowFooter = true;

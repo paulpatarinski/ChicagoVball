@@ -117,10 +117,10 @@ namespace Core.Pages
 			var navigationIconGrid = new Grid {
 				RowDefinitions = new RowDefinitionCollection {
 					new RowDefinition {
-						Height = new GridLength (0.72, GridUnitType.Star)
+						Height = new GridLength (0.45, GridUnitType.Star)
 					},
 					new RowDefinition {
-						Height = new GridLength (0.28, GridUnitType.Star)
+						Height = new GridLength (0.55, GridUnitType.Star)
 					},
 				},
 				ColumnDefinitions = new ColumnDefinitionCollection {
@@ -131,19 +131,22 @@ namespace Core.Pages
 				VerticalOptions = LayoutOptions.Start,
 			};
 
-			var navigationIconImage = new Image { Source = "NavigateIcon", HeightRequest = 50 };
+			var navigationIconImage = new Image { Source = "NavigateIcon" };
 
-			var navigationTimeLabel = new Label {
-				Text = "10 min", TextColor = Color.FromHex ("FF3A84DF"),
-				Font = Font.SystemFontOfSize (13),
-				HorizontalOptions = LayoutOptions.Center,
+			//todo : replace with ImageButton when Labs is fixed
+			var navButton = new Button () {
+				Text = "Navigate",
+				TextColor = Color.Black,
+				Font = Font.SystemFontOfSize (14),
+				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Start
 			};
 
+			_map.NavigationButton = navButton;
+
 			navigationIconGrid.Children.Add (navigationIconImage, 0, 0);
-			navigationIconGrid.Children.Add (navigationTimeLabel, 0, 1);
-			navigationIconGrid.RowSpacing = 1;
-			Grid.SetRowSpan (navigationIconImage, 2);
+			navigationIconGrid.Children.Add (navButton, 0, 1);
+			navigationIconGrid.RowSpacing = 0;
 
 			footerGrid.Children.Add (pinInfoStackLayout, 0, 0);
 			footerGrid.Children.Add (navigationIconGrid, 1, 0);

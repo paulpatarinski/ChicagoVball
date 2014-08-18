@@ -10,6 +10,8 @@ namespace Core.Helpers.Controls
 		{
 		}
 
+		public Button NavigationButton	{ get; set; }
+
 		public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create<CustomMap, CustomPin> (x => x.SelectedPin, new CustomPin{ Label = "test123" });
 
 		public CustomPin SelectedPin {
