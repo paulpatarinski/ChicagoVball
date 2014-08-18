@@ -16,6 +16,7 @@ namespace ShouldIWashMyCar.Android
 		protected override void OnElementPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged (sender, e);
+
 			var androidMapView = (MapView)Control;
 			var formsMap = (CustomMap)sender;
 			 
@@ -46,8 +47,6 @@ namespace ShouldIWashMyCar.Android
 					androidMapView.Map.AddMarker (markerWithIcon);
 				}
 
-		
-
 				_isDrawnDone = true;
 			}
 		}
@@ -63,6 +62,12 @@ namespace ShouldIWashMyCar.Android
 
 			customMapControl.ShowFooter = false;
 
+			ResetPrevioslySelectedMarker ();
+		}
+
+		void ResetPrevioslySelectedMarker ()
+		{
+			//todo : This should reset to the default icon for the pin (right now the icon is hard coded)
 			if (_previouslySelectedMarker != null) {
 				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", "CarWashMapIcon"))); 
 				_previouslySelectedMarker = null;
@@ -71,10 +76,7 @@ namespace ShouldIWashMyCar.Android
 
 		void HandleMarkerClick (object sender, GoogleMap.MarkerClickEventArgs e)
 		{
-			if (_previouslySelectedMarker != null) {
-				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", "CarWashMapIcon"))); 
-				_previouslySelectedMarker = null;
-			}
+			ResetPrevioslySelectedMarker ();
 
 			var currentMarker = e.Marker;
 
