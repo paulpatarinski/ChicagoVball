@@ -1,13 +1,21 @@
-﻿using Xamarin.Forms;
-using Core;
+﻿using Core.Helpers;
+using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+using Core.ViewModels;
+using Core.Services;
+using Core.Helpers.Controls;
 
-namespace ChiVball
+namespace Core.Pages
 {
 	public class MainPage : ContentPage
 	{
+		MainPageViewModel _viewModel;
+
 		public MainPage ()
 		{
+			_viewModel = new MainPageViewModel (new VolleyballLocationService ());
+			BindingContext = _viewModel;
+
 			BackgroundColor = Color.White;
 
 			var mainGrid = new Grid {
@@ -36,7 +44,7 @@ namespace ChiVball
 
 			//Bind the footer to the ShowFooter property
 			mainGrid.BindingContext = _map;
-			mainGrid.Children [1].SetBinding<CustomMap> (VisualElement.IsVisibleProperty, x => x.ShowFooter);
+			mainGrid.Children [1].SetBinding<CustomMap> (IsVisibleProperty, x => x.ShowFooter);
 
 			Content = mainGrid;
 		}
@@ -56,18 +64,8 @@ namespace ChiVball
 
 			_map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (40))){ IsShowingUser = true };
 
-			for (int i = 1; i <= 10; i++) {
-
-				latitude += 0.001;
-
-				_map.CustomPins.Add (new CustomPin {
-					Label = "Pin " + i, 
-					Address = "Address " + i,
-					Position = new Position (latitude, longitude),
-					PinIcon = "CarWashMapIcon"
-				});
-			}
-
+			_map.BindingContext = _viewModel;
+			_map.SetBinding<MainPageViewModel> (CustomMap.CustomPinsProperty, x => x.VolleyballLocations);
 
 			return new ContentView (){ Content = _map };
 		}
@@ -102,12 +100,13 @@ namespace ChiVball
 
 
 			var detailsLabel = new Label {
-				Text = "Address Shows Here"
+				Text = "Address Shows Here",
+				TextColor = Color.Gray,
+				Font = Font.SystemFontOfSize (14)
 			};
 
 			detailsLabel.BindingContext = _map;
 			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
-
 
 			var pinInfoStackLayout = new StackLayout { Padding = new Thickness (25, 8, 0, 0)	};
 

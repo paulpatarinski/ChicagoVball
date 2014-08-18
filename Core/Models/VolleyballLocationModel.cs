@@ -1,8 +1,6 @@
-﻿using Xamarin.Forms.Maps;
-
-namespace Core.Helpers.Controls
+﻿namespace Core.Models
 {
-	public class CustomPin
+	public class VolleyballLocationModel
 	{
 		public string Label { get; set; }
 
@@ -12,8 +10,8 @@ namespace Core.Helpers.Controls
 
 		public string PhoneNumber { get; set; }
 
-		public Position Position { get; set; }
+		public double Latitude { get; set; }
 
+		public double Longitude { get; set; }
 	}
 }
-

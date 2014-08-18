@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace ChiVball
+namespace Core.Helpers
 {
 	public static class Colors
 	{

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Core.Pages;
 using Xamarin.Forms;
 
-namespace ChiVball
+namespace Core
 {
 	public class App
 	{

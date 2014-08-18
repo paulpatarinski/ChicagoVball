@@ -5,8 +5,9 @@ using Xamarin.Forms;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.Maps;
 using Core;
+using Core.Helpers.Controls;
 
-[assembly: ExportRenderer (typeof(Core.CustomMap), typeof(Android.MapViewRenderer))]
+[assembly: ExportRenderer (typeof(Core.Helpers.Controls.CustomMap), typeof(Android.MapViewRenderer))]
 namespace Android
 {
 	public class MapViewRenderer : MapRenderer

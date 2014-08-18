@@ -1,9 +1,8 @@
-﻿using System;
-using Xamarin.Forms.Maps;
+﻿using System.Collections.ObjectModel;
 using Xamarin.Forms;
-using System.Collections.Generic;
+using Xamarin.Forms.Maps;
 
-namespace Core
+namespace Core.Helpers.Controls
 {
 	public class CustomMap : Map
 	{
@@ -25,10 +24,10 @@ namespace Core
 			set{ base.SetValue (ShowFooterProperty, value); }
 		}
 
-		public static readonly BindableProperty CustomPinsProperty = BindableProperty.Create<CustomMap, List<CustomPin>> (x => x.CustomPins, new List<CustomPin> (){ new CustomPin (){ Label = "test123" } });
+		public static readonly BindableProperty CustomPinsProperty = BindableProperty.Create<CustomMap, ObservableCollection<CustomPin>> (x => x.CustomPins, new ObservableCollection<CustomPin> (){ new CustomPin (){ Label = "test123" } });
 
-		public List<CustomPin> CustomPins {
-			get{ return (List<CustomPin>)base.GetValue (CustomPinsProperty); }
+		public ObservableCollection<CustomPin> CustomPins {
+			get{ return (ObservableCollection<CustomPin>)base.GetValue (CustomPinsProperty); }
 			set{ base.SetValue (CustomPinsProperty, value); }
 		}
 
