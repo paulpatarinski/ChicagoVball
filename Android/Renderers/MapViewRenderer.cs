@@ -70,7 +70,7 @@ namespace Android
 		{
 			//todo : This should reset to the default icon for the pin (right now the icon is hard coded)
 			if (_previouslySelectedMarker != null) {
-				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", "CarWashMapIcon"))); 
+				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", Icons.CrazyRobot))); 
 				_previouslySelectedMarker = null;
 			}
 		}

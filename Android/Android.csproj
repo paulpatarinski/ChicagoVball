@@ -95,7 +95,7 @@
     <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\CarWashMapIcon.png" />
+    <AndroidAsset Include="Assets\CrazyRobot.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

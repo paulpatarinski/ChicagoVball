@@ -16,7 +16,7 @@ namespace Core.Services
 				Latitude = 41.965097,
 				Longitude = -87.634818,
 				PhoneNumber = "Unknown",
-				PinIcon = "CarWashMapIcon"
+				PinIcon = Icons.CrazyRobot
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -25,7 +25,7 @@ namespace Core.Services
 				Latitude = 42.038580,
 				Longitude = -87.944055,
 				PhoneNumber = "(847)640-1000",
-				PinIcon = "CarWashMapIcon"
+				PinIcon = Icons.CrazyRobot
 			});
 
 			return locations;
