@@ -72,12 +72,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChiVball\Core.csproj">
-      <Project>{DA3963C9-4112-4ADA-9284-6C546C12C6BB}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -102,5 +96,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\CarWashMapIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{DA3963C9-4112-4ADA-9284-6C546C12C6BB}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

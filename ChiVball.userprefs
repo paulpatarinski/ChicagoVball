@@ -1,12 +1,19 @@
 ﻿<Properties GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.MonoForAndroid_API_15" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Android\Renderers\MapViewRenderer.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.03cfb437437cd4ac" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Android\MainActivity.cs">
     <Files>
-      <File FileName="ChiVball\Helpers\Controls\CustomMap.cs" Line="1" Column="1" />
-      <File FileName="ChiVball\Helpers\Controls\CustomPin.cs" Line="1" Column="1" />
-      <File FileName="ChiVball\Pages\MainPage.cs" Line="4" Column="4" />
-      <File FileName="Android\Renderers\MapViewRenderer.cs" Line="4" Column="4" />
+      <File FileName="Android\MainActivity.cs" Line="18" Column="18" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Android" expanded="True">
+            <Node name="References" expanded="True" selected="True" />
+          </Node>
+          <Node name="Core" expanded="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
