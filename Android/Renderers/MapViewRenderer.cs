@@ -23,6 +23,7 @@ namespace ShouldIWashMyCar.Android
 				androidMapView.Map.Clear ();
 
 				androidMapView.Map.MarkerClick += HandleMarkerClick;
+				androidMapView.Map.MapClick += HandleMapClick;
 				androidMapView.Map.MyLocationEnabled = formsMap.IsShowingUser;
 
 				//The footer overlays the zoom controls
@@ -45,6 +46,8 @@ namespace ShouldIWashMyCar.Android
 					androidMapView.Map.AddMarker (markerWithIcon);
 				}
 
+		
+
 				_isDrawnDone = true;
 			}
 		}
@@ -52,6 +55,18 @@ namespace ShouldIWashMyCar.Android
 		Marker _previouslySelectedMarker {
 			get;
 			set;
+		}
+
+		void HandleMapClick (object sender, GoogleMap.MapClickEventArgs e)
+		{
+			var customMapControl = this.Element as CustomMap;
+
+			customMapControl.ShowFooter = false;
+
+			if (_previouslySelectedMarker != null) {
+				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", "CarWashMapIcon"))); 
+				_previouslySelectedMarker = null;
+			}
 		}
 
 		void HandleMarkerClick (object sender, GoogleMap.MarkerClickEventArgs e)
@@ -65,8 +80,7 @@ namespace ShouldIWashMyCar.Android
 
 			currentMarker.SetIcon (BitmapDescriptorFactory.DefaultMarker ());
 
-			var myMap = this.Element as CustomMap;
-
+			var customMapControl = this.Element as CustomMap;
 
 			var formsPin = new CustomPin {
 				Label = currentMarker.Title,
@@ -74,7 +88,8 @@ namespace ShouldIWashMyCar.Android
 				Position = new Position (currentMarker.Position.Latitude, currentMarker.Position.Longitude)
 			};
 
-			myMap.SelectedPin = formsPin;
+			customMapControl.SelectedPin = formsPin;
+			customMapControl.ShowFooter = true;
 
 			_previouslySelectedMarker = currentMarker;
 		}

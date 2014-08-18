@@ -34,6 +34,10 @@ namespace ChiVball
 
 			mainGrid.Children.Add (CreateFooter (), 0, 1);
 
+			//Bind the footer to the ShowFooter property
+			mainGrid.BindingContext = _map;
+			mainGrid.Children [1].SetBinding<CustomMap> (VisualElement.IsVisibleProperty, x => x.ShowFooter);
+
 			Content = mainGrid;
 		}
 

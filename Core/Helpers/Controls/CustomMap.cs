@@ -18,6 +18,13 @@ namespace Core
 			set{ base.SetValue (SelectedPinProperty, value); }
 		}
 
+		public static readonly BindableProperty ShowFooterProperty = BindableProperty.Create<CustomMap, bool> (x => x.ShowFooter, false);
+
+		public bool ShowFooter {
+			get{ return (bool)base.GetValue (ShowFooterProperty); }
+			set{ base.SetValue (ShowFooterProperty, value); }
+		}
+
 		public static readonly BindableProperty CustomPinsProperty = BindableProperty.Create<CustomMap, List<CustomPin>> (x => x.CustomPins, new List<CustomPin> (){ new CustomPin (){ Label = "test123" } });
 
 		public List<CustomPin> CustomPins {
