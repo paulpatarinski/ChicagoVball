@@ -46,7 +46,6 @@ namespace ShouldIWashMyCar.Android
 				}
 
 				_isDrawnDone = true;
-
 			}
 		}
 
@@ -78,17 +77,6 @@ namespace ShouldIWashMyCar.Android
 			myMap.SelectedPin = formsPin;
 
 			_previouslySelectedMarker = currentMarker;
-		}
-
-		protected override void OnLayout (bool changed, int l, int t, int r, int b)
-		{
-			base.OnLayout (changed, l, t, r, b);
-
-			//NOTIFY CHANGE
-
-			if (changed) {
-				_isDrawnDone = false;
-			}
 		}
 	}
 }
