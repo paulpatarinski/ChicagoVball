@@ -42,6 +42,8 @@
     <Compile Include="Services\VolleyballLocationService.cs" />
     <Compile Include="Models\VolleyballLocationModel.cs" />
     <Compile Include="Helpers\Icons.cs" />
+    <Compile Include="Helpers\Controls\ImageButton.cs" />
+    <Compile Include="Helpers\Enums\ImageOrientation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.2.2.6243\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10\Xamarin.Forms.targets')" />
@@ -62,5 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\Enums\" />
   </ItemGroup>
 </Project>

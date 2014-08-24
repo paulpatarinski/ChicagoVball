@@ -114,42 +114,26 @@ namespace Core.Pages
 			pinInfoStackLayout.Children.Add (detailsLabel);
 			pinInfoStackLayout.Spacing = 0;
 
-			var navigationIconGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (0.45, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.55, GridUnitType.Star)
-					},
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (1, GridUnitType.Star)
-					}
-				},
-				VerticalOptions = LayoutOptions.Start,
-			};
 
-			var navigationIconImage = new Image { Source = "NavigateIcon" };
 
 			//todo : replace with ImageButton when Labs is fixed
-			var navButton = new Button () {
-				Text = "Navigate",
+			var navButton = new ImageButton () {
+				Image = "icon_navigate",
+				ImageHeightRequest = 140,
+				ImageWidthRequest = 140,
+//				Text = "Navigate",
 				TextColor = Color.Black,
 				Font = Font.SystemFontOfSize (14),
 				BackgroundColor = Colors.TransparentWhite,
-				VerticalOptions = LayoutOptions.Start
+				VerticalOptions = LayoutOptions.Center,
+				HorizontalOptions = LayoutOptions.Center
 			};
 
 			_map.NavigationButton = navButton;
 
-			navigationIconGrid.Children.Add (navigationIconImage, 0, 0);
-			navigationIconGrid.Children.Add (navButton, 0, 1);
-			navigationIconGrid.RowSpacing = 0;
 
 			footerGrid.Children.Add (pinInfoStackLayout, 0, 0);
-			footerGrid.Children.Add (navigationIconGrid, 1, 0);
+			footerGrid.Children.Add (new ContentView (){ Content = navButton }, 1, 0);
 
 			return new ContentView{ Content = footerGrid, BackgroundColor = Colors.TransparentWhite };
 		}

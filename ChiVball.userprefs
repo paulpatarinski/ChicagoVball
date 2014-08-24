@@ -1,24 +1,22 @@
 ﻿<Properties GitUserInfo="UsingMD">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.03cfb437437cd4ac" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Android\Renderers\MapViewRenderer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Android2\Renderers\MapViewRenderer.cs">
     <Files>
-      <File FileName="Android\Renderers\MapViewRenderer.cs" Line="4" Column="4" />
-      <File FileName="Core\Helpers\Controls\CustomMap.cs" Line="130" Column="130" />
-      <File FileName="Core\Pages\MainPage.cs" Line="48" Column="48" />
+      <File FileName="Android\MainActivity.cs" Line="1" Column="1" />
+      <File FileName="Android\Renderers\ImageButtonRenderer.cs" Line="1" Column="1" />
+      <File FileName="Android\Resources\Resource.designer.cs" Line="1" Column="1" />
+      <File FileName="Android2\MainActivity.cs" Line="4" Column="4" />
+      <File FileName="Android2\Renderers\ImageButtonRenderer.cs" Line="1" Column="1" />
+      <File FileName="Android2\Renderers\MapViewRenderer.cs" Line="4" Column="4" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Android" expanded="True" selected="True">
-            <Node name="Renderers" expanded="True" />
-          </Node>
-          <Node name="Core" expanded="True" />
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\WIP\ChiVball\Core\Helpers\Controls\CustomMap.cs" line="33" column="1" />
+      <Breakpoint file="C:\WIP\ChiVball\Android\Renderers\GridRenderer.cs" line="18" column="1" />
+      <Breakpoint file="C:\WIP\ChiVball\Android\MainActivity.cs" line="9" column="1" />
+      <Breakpoint file="C:\WIP\ChiVball\Android\Renderers\ImageButtonRenderer.cs" line="47" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
