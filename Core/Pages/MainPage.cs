@@ -114,14 +114,11 @@ namespace Core.Pages
 			pinInfoStackLayout.Children.Add (detailsLabel);
 			pinInfoStackLayout.Spacing = 0;
 
-
-
 			//todo : replace with ImageButton when Labs is fixed
 			var navButton = new ImageButton () {
-				Image = "icon_navigate",
+				Image = "navigate_icon",
 				ImageHeightRequest = 140,
 				ImageWidthRequest = 140,
-//				Text = "Navigate",
 				TextColor = Color.Black,
 				Font = Font.SystemFontOfSize (14),
 				BackgroundColor = Colors.TransparentWhite,
