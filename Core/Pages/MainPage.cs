@@ -119,8 +119,6 @@ namespace Core.Pages
 				Image = "navigate_icon",
 				ImageHeightRequest = 140,
 				ImageWidthRequest = 140,
-				TextColor = Color.Black,
-				Font = Font.SystemFontOfSize (14),
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center
