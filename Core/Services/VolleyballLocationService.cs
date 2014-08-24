@@ -10,6 +10,7 @@ namespace Core.Services
 		{
 			var locations = new List<VolleyballLocationModel> ();
 
+			//Chicago
 			locations.Add (new VolleyballLocationModel {
 				Label = "Montrose Ave Beach", 
 				Address = "200 W Montrose Dr, Chicago, IL",
@@ -29,23 +30,80 @@ namespace Core.Services
 			});
 
 			locations.Add (new VolleyballLocationModel {
-				Label = "RecPlex", 
-				Address = "420 Dempster St, Mt Prospect, IL",
-				Latitude = 42.038580,
-				Longitude = -87.944055,
-				PhoneNumber = "(847)640-1000",
-				PinIcon = Icons.CrazyRobot
-			});
-
-			locations.Add (new VolleyballLocationModel {
 				Label = "Windy City Fieldhouse", 
-				Address = "2367 W Logan Blvd , Chicago, IL",
+				Address = "2367 W Logan Blvd, Chicago, IL",
 				Latitude = 41.928497,
 				Longitude = -87.686766,
 				PhoneNumber = "(773) 486-7300",
 				PinIcon = Icons.CrazyRobot
 			});
 
+
+			//Suburbs
+			locations.Add (new VolleyballLocationModel {
+				Label = "RecPlex", 
+				Address = "420 Dempster St, Mt Prospect, IL",
+				Latitude = 42.038580,
+				Longitude = -87.944055,
+				PhoneNumber = "(847) 640-1000",
+				PinIcon = Icons.CrazyRobot
+			});
+
+			locations.Add (new VolleyballLocationModel {
+				Label = "Palatine Park District", 
+				Address = "200 E Wood St, Palatine, IL",
+				Latitude = 42.113547,
+				Longitude = -88.038834,
+				PhoneNumber = "(847) 991-0333",
+				PinIcon = Icons.CrazyRobot
+			});
+
+			locations.Add (new VolleyballLocationModel {
+				Label = "Hanover Park District", 
+				Address = "1919 Walnut Ave, Hanover Park, IL",
+				Latitude = 41.993697,
+				Longitude = -88.152380,
+				PhoneNumber = "(630) 837-6300",
+				PinIcon = Icons.CrazyRobot
+			});
+
+
+			locations.Add (new VolleyballLocationModel {
+				Label = "Glenview Park District", 
+				Address = "2400 Chestnut Ave, Glenview, IL",
+				Latitude = 42.088504,
+				Longitude = -87.816723,
+				PhoneNumber = "(847) 724-5670",
+				PinIcon = Icons.CrazyRobot
+			});
+
+			locations.Add (new VolleyballLocationModel {
+				Label = "Streamwood Park District", 
+				Address = "550 S Park Blvd, Streamwood, IL",
+				Latitude = 42.020581,
+				Longitude = -88.170744,
+				PhoneNumber = "(630) 483-3010",
+				PinIcon = Icons.CrazyRobot
+			});
+
+			locations.Add (new VolleyballLocationModel {
+				Label = "Edgar A Poe School", 
+				Address = "2800 N Highland Ave, Arlington Heights, IL",
+				Latitude = 42.126878,
+				Longitude = -87.985978,
+				PhoneNumber = "(847) 670-3200",
+				PinIcon = Icons.CrazyRobot
+			});
+
+			locations.Add (new VolleyballLocationModel {
+				Label = "Meineke Pool", 
+				Address = "220 East Weathersfield Way, Schaumburg, IL",
+				Latitude = 42.017050,
+				Longitude = -88.073599,
+				PhoneNumber = "(847) 985-2133",
+				PinIcon = Icons.CrazyRobot
+			});
+		
 			return locations;
 		}
 	}
