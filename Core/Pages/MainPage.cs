@@ -91,7 +91,7 @@ namespace Core.Pages
 			var placeNameLabel = new Label {
 				Text = "Pin Label Shows Here",
 				TextColor = Color.Black,
-				Font = Font.SystemFontOfSize (22)
+				Font = Font.SystemFontOfSize (20)
 
 			};
 
@@ -108,7 +108,7 @@ namespace Core.Pages
 			detailsLabel.BindingContext = _map;
 			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
 
-			var pinInfoStackLayout = new StackLayout { Padding = new Thickness (25, 8, 0, 0)	};
+			var pinInfoStackLayout = new StackLayout { Padding = new Thickness (22, 8, 0, 0)	};
 
 			pinInfoStackLayout.Children.Add (placeNameLabel);
 			pinInfoStackLayout.Children.Add (detailsLabel);
