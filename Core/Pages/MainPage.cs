@@ -91,19 +91,23 @@ namespace Core.Pages
 			var placeNameLabel = new Label {
 				Text = "Pin Label Shows Here",
 				TextColor = Color.Black,
-				Font = Font.SystemFontOfSize (20)
-
 			};
+
+		  Device.OnPlatform(iOS: () => placeNameLabel.Font = Font.SystemFontOfSize(20),
+		    Android: () => placeNameLabel.Font = Font.SystemFontOfSize(20),
+		    WinPhone: () => placeNameLabel.Font = Font.SystemFontOfSize(24));
 
 			placeNameLabel.BindingContext = _map;
 			placeNameLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Label);
 
-
 			var detailsLabel = new Label {
 				Text = "Address Shows Here",
 				TextColor = Color.Gray,
-				Font = Font.SystemFontOfSize (14)
 			};
+
+      Device.OnPlatform(iOS: () => detailsLabel.Font = Font.SystemFontOfSize(14),
+       Android: () => detailsLabel.Font = Font.SystemFontOfSize(14),
+       WinPhone: () => detailsLabel.Font = Font.SystemFontOfSize(18));
 
 			detailsLabel.BindingContext = _map;
 			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
