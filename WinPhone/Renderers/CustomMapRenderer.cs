@@ -15,7 +15,9 @@ using Microsoft.Phone.Maps.Toolkit;
 using WinPhone.Helpers;
 using WinPhone.Renderers;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 using Xamarin.Forms.Platform.WinPhone;
+using Map = Microsoft.Phone.Maps.Controls.Map;
 using Point = System.Windows.Point;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
@@ -25,6 +27,7 @@ namespace WinPhone.Renderers
   {
     private Map _nativeMap;
     private CustomMap _formsMap;
+    private CustomPin _selectedPin;
 
     protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -33,14 +36,14 @@ namespace WinPhone.Renderers
       if (_nativeMap == null)
       {
         _formsMap = (CustomMap) sender;
-
+        _formsMap.NavigationButton.Clicked += NavigationButtonOnClicked;
         //Center position Chicago
         const double latitude = 41.951692;
         const double longitude = -87.993720;
 
         _nativeMap = new Map {ZoomLevel = 9, Center = new GeoCoordinate(latitude, longitude)};
         //_nativeMap.Tap += NativeMapOnTap;
-
+        
         this.SetNativeControl(_nativeMap);
 
         AddCurrentLocationToMap();
@@ -66,22 +69,35 @@ namespace WinPhone.Renderers
       }
     }
 
-    private void NativePinOnTap(object sender, GestureEventArgs gestureEventArgs)
+    private async void NavigationButtonOnClicked(object sender, EventArgs eventArgs)
     {
-      _formsMap.ShowFooter = true;
-      var nativePin = (Pushpin)sender;
+      var uri = new Uri(string.Format("ms-drive-to:?destination.latitude={0}&destination.longitude={1}&destination.address={2}&destination.name={3}", _selectedPin.Position.Latitude,
+         _selectedPin.Position.Longitude,_selectedPin.Address, _selectedPin.Label));
 
-      _formsMap.SelectedPin = new CustomPin
-      {
-        Label = nativePin.Content.ToString(),
-      };
+      await Windows.System.Launcher.LaunchUriAsync(uri);
     }
 
-    //private void NativeMapOnTap(object sender, GestureEventArgs gestureEventArgs)
-    //{
-    //  _formsMap.ShowFooter = false;
-    //}
+    private void NativePinOnTap(object sender, GestureEventArgs gestureEventArgs)
+    {
+      var nativePin = (Pushpin)sender;
 
+      var contentArray = nativePin.Content.ToString().Split('\n');
+
+      var label = contentArray[0];
+      var description = contentArray[1];
+
+      _selectedPin = new CustomPin
+      {
+        Label = label,
+        Address = description,
+        Position = new Position(nativePin.GeoCoordinate.Latitude, nativePin.GeoCoordinate.Longitude)
+      };
+
+      _formsMap.SelectedPin = _selectedPin;
+
+      _formsMap.ShowFooter = true;
+    }
+   
     private async Task AddCurrentLocationToMap()
     {
       var myGeolocator = new Geolocator();
