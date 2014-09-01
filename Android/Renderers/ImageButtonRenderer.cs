@@ -41,7 +41,7 @@ namespace Android
 		private void SetImageSource (Android.Widget.Button targetButton, Core.Helpers.Controls.ImageButton model)
 		{
 			var packageName = Context.PackageName;
-			const int padding = 10;
+			const int padding = 0;
 			const string resourceType = "drawable";
 
 			var resId = Resources.GetIdentifier (model.Image, resourceType, packageName);
