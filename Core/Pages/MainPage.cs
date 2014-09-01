@@ -93,9 +93,9 @@ namespace Core.Pages
 				TextColor = Color.Black,
 			};
 
-		  Device.OnPlatform(iOS: () => placeNameLabel.Font = Font.SystemFontOfSize(20),
-		    Android: () => placeNameLabel.Font = Font.SystemFontOfSize(20),
-		    WinPhone: () => placeNameLabel.Font = Font.SystemFontOfSize(24));
+			Device.OnPlatform (iOS: () => placeNameLabel.Font = Font.SystemFontOfSize (20),
+				Android: () => placeNameLabel.Font = Font.SystemFontOfSize (20),
+				WinPhone: () => placeNameLabel.Font = Font.SystemFontOfSize (24));
 
 			placeNameLabel.BindingContext = _map;
 			placeNameLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Label);
@@ -105,9 +105,9 @@ namespace Core.Pages
 				TextColor = Color.Gray,
 			};
 
-      Device.OnPlatform(iOS: () => detailsLabel.Font = Font.SystemFontOfSize(14),
-       Android: () => detailsLabel.Font = Font.SystemFontOfSize(14),
-       WinPhone: () => detailsLabel.Font = Font.SystemFontOfSize(18));
+			Device.OnPlatform (iOS: () => detailsLabel.Font = Font.SystemFontOfSize (14),
+				Android: () => detailsLabel.Font = Font.SystemFontOfSize (14),
+				WinPhone: () => detailsLabel.Font = Font.SystemFontOfSize (18));
 
 			detailsLabel.BindingContext = _map;
 			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
@@ -121,8 +121,12 @@ namespace Core.Pages
 			//todo : replace with ImageButton when Labs is fixed
 			var navButton = new ImageButton () {
 				Image = "navigate_icon",
-				ImageHeightRequest = 140,
-				ImageWidthRequest = 140,
+				Text = "Route",
+				TextColor = Colors.DarkBlue,
+				Font = Font.SystemFontOfSize (12),
+				Orientation = ImageOrientation.ImageOnTop,
+				ImageHeightRequest = 120,
+				ImageWidthRequest = 120,
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center
