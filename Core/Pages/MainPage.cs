@@ -123,10 +123,10 @@ namespace Core.Pages
 				Image = "navigate_icon",
 				Text = "Route",
 				TextColor = Colors.DarkBlue,
-				Font = Font.SystemFontOfSize (12),
+				Font = Font.SystemFontOfSize (14),
 				Orientation = ImageOrientation.ImageOnTop,
-				ImageHeightRequest = 120,
-				ImageWidthRequest = 120,
+				ImageHeightRequest = 75,
+				ImageWidthRequest = 75,
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center

@@ -8,7 +8,7 @@ namespace Core.Helpers
 
 		public static Color TransparentBlack { get { return Color.FromRgba (0, 0, 0, 0.2); } }
 
-		public static Color DarkBlue { get { return Color.FromHex ("4B77BE"); } }
+		public static Color DarkBlue { get { return Color.FromHex ("#FF4285F4"); } }
 	}
 }
 
