@@ -37,15 +37,10 @@ namespace Core.Helpers.Controls
 			_mapGrid.Children [1].SetBinding<CustomMap> (IsVisibleProperty, x => x.ShowFooter);
 
 			_mapGrid.Children [1].GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
-				//If the footer is collapsed, expand the footer and collapse the map
 				if (FooterHeight == COLLAPSED_FOOTER_HEIGHT) {
-					Grid.SetRowSpan (this, 1);
-					MapHeight = COLLAPSED_MAP_HEIGHT;
-					FooterHeight = EXPANDED_FOOTER_HEIGHT;
+					ExpandFooter ();
 				} else {
-					Grid.SetRowSpan (this, 2);
-					MapHeight = EXPANDED_MAP_HEIGHT;
-					FooterHeight = COLLAPSED_FOOTER_HEIGHT;
+					ExpandMap ();
 				}
 			}));
 		}
@@ -70,7 +65,13 @@ namespace Core.Helpers.Controls
 
 		public bool ShowFooter {
 			get{ return (bool)base.GetValue (ShowFooterProperty); }
-			set{ base.SetValue (ShowFooterProperty, value); }
+			set {
+				base.SetValue (ShowFooterProperty, value);
+
+				if (value == false) {
+					ExpandMap ();
+				}
+			}
 		}
 
 		public static readonly BindableProperty FooterHeightProperty = BindableProperty.Create<CustomMap, double> (x => x.FooterHeight, COLLAPSED_FOOTER_HEIGHT);
@@ -98,6 +99,20 @@ namespace Core.Helpers.Controls
 		public Grid GetMapGrid ()
 		{
 			return _mapGrid;
+		}
+
+		void ExpandFooter ()
+		{
+			Grid.SetRowSpan (this, 1);
+			MapHeight = COLLAPSED_MAP_HEIGHT;
+			FooterHeight = EXPANDED_FOOTER_HEIGHT;
+		}
+
+		void ExpandMap ()
+		{
+			Grid.SetRowSpan (this, 2);
+			MapHeight = EXPANDED_MAP_HEIGHT;
+			FooterHeight = COLLAPSED_FOOTER_HEIGHT;
 		}
 
 		View CreateFooter ()
