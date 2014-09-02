@@ -22,7 +22,19 @@ namespace Android
 
 			var androidMapView = (MapView)Control;
 			var formsMap = (CustomMap)sender;
-			 
+
+			if (e.PropertyName == CustomMap.FooterHeightProperty.PropertyName) {
+				var customMap = (CustomMap)sender;
+
+				var grid = (Grid)customMap.Parent;
+
+				var mapRow = grid.RowDefinitions [0];
+				var footerRow = grid.RowDefinitions [1];
+
+				mapRow.Height = new GridLength (customMap.MapHeight, GridUnitType.Star);
+				footerRow.Height = new GridLength (customMap.FooterHeight, GridUnitType.Star);
+
+			}
 
 			if (e.PropertyName.Equals ("VisibleRegion") && !_isDrawnDone) {
 				androidMapView.Map.Clear ();
@@ -51,7 +63,7 @@ namespace Android
 						
 					androidMapView.Map.AddMarker (markerWithIcon);
 				}
-
+			
 				_isDrawnDone = true;
 			}
 		}
