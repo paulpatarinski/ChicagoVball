@@ -52,6 +52,8 @@ namespace Core.Helpers.Controls
 
 		public Button NavigationButton	{ get; set; }
 
+		Grid _footerMasterGrid;
+
 		Grid _mapGrid;
 
 		public static readonly BindableProperty SelectedPinProperty = BindableProperty.Create<CustomMap, CustomPin> (x => x.SelectedPin, new CustomPin{ Label = "test123" });
@@ -71,6 +73,32 @@ namespace Core.Helpers.Controls
 				if (value == false) {
 					ExpandMap ();
 				}
+			}
+		}
+
+		public static readonly BindableProperty ShowAdditionalInfoProperty = BindableProperty.Create<CustomMap, bool> (x => x.ShowAdditionalInfo, false);
+
+		public bool ShowAdditionalInfo {
+			get{ return (bool)base.GetValue (ShowAdditionalInfoProperty); }
+			set {
+				base.SetValue (ShowAdditionalInfoProperty, value);
+
+				if (value == false) {
+					_footerMasterGrid.Children.RemoveAt (1);
+					_footerMasterGrid.RowDefinitions.RemoveAt (1);
+					_footerMasterGrid.RowDefinitions [0].Height = new GridLength (1, GridUnitType.Star);
+				} else {
+
+					_footerMasterGrid.RowDefinitions.Add (
+						new RowDefinition {
+							Height = new GridLength (0.8, GridUnitType.Star)
+						}
+					);
+					_footerMasterGrid.RowDefinitions [0].Height = new GridLength (0.2, GridUnitType.Star);
+
+					_footerMasterGrid.Children.Add (GetExtraInfoView (), 0, 1);
+				}
+
 			}
 		}
 
@@ -106,6 +134,7 @@ namespace Core.Helpers.Controls
 			Grid.SetRowSpan (this, 1);
 			MapHeight = COLLAPSED_MAP_HEIGHT;
 			FooterHeight = EXPANDED_FOOTER_HEIGHT;
+			ShowAdditionalInfo = true;
 		}
 
 		void ExpandMap ()
@@ -113,10 +142,24 @@ namespace Core.Helpers.Controls
 			Grid.SetRowSpan (this, 2);
 			MapHeight = EXPANDED_MAP_HEIGHT;
 			FooterHeight = COLLAPSED_FOOTER_HEIGHT;
+			ShowAdditionalInfo = false;
 		}
 
 		View CreateFooter ()
 		{
+			_footerMasterGrid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					},
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (1, GridUnitType.Star)
+					},
+				}
+			};
+
 			var footerGrid = new Grid {
 				RowDefinitions = new RowDefinitionCollection {
 					new RowDefinition {
@@ -133,6 +176,7 @@ namespace Core.Helpers.Controls
 				}
 			};
 
+
 			var placeNameLabel = new Label {
 				Text = "Pin Label Shows Here",
 				TextColor = Color.Black,
@@ -145,22 +189,23 @@ namespace Core.Helpers.Controls
 			placeNameLabel.BindingContext = this;
 			placeNameLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Label);
 
-			var detailsLabel = new Label {
+			var addressLabel = new Label {
 				Text = "Address Shows Here",
 				TextColor = Color.Gray,
 			};
 
-			Device.OnPlatform (iOS: () => detailsLabel.Font = Font.SystemFontOfSize (14),
-				Android: () => detailsLabel.Font = Font.SystemFontOfSize (14),
-				WinPhone: () => detailsLabel.Font = Font.SystemFontOfSize (18));
+			Device.OnPlatform (iOS: () => addressLabel.Font = Font.SystemFontOfSize (14),
+				Android: () => addressLabel.Font = Font.SystemFontOfSize (14),
+				WinPhone: () => addressLabel.Font = Font.SystemFontOfSize (18));
 
-			detailsLabel.BindingContext = this;
-			detailsLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
+			addressLabel.BindingContext = this;
+			addressLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
 
+	
 			var pinInfoStackLayout = new StackLayout { Padding = new Thickness (22, 8, 0, 0)	};
 
 			pinInfoStackLayout.Children.Add (placeNameLabel);
-			pinInfoStackLayout.Children.Add (detailsLabel);
+			pinInfoStackLayout.Children.Add (addressLabel);
 			pinInfoStackLayout.Spacing = 0;
 
 			//todo : replace with ImageButton when Labs is fixed
@@ -182,7 +227,26 @@ namespace Core.Helpers.Controls
 			footerGrid.Children.Add (pinInfoStackLayout, 0, 0);
 			footerGrid.Children.Add (new ContentView (){ Content = navButton }, 1, 0);
 
-			return new ContentView{ Content = footerGrid, BackgroundColor = Colors.TransparentWhite };
+			_footerMasterGrid.Children.Add (footerGrid, 0, 0);
+
+			return new ContentView{ Content = _footerMasterGrid, BackgroundColor = Colors.TransparentWhite };
+		}
+
+		ContentView GetExtraInfoView ()
+		{
+			var phoneLabel = new Label {
+				Text = "773 733 2333",
+				TextColor = Color.Gray,
+			};
+
+			Device.OnPlatform (iOS: () => phoneLabel.Font = Font.SystemFontOfSize (14),
+				Android: () => phoneLabel.Font = Font.SystemFontOfSize (14),
+				WinPhone: () => phoneLabel.Font = Font.SystemFontOfSize (18));
+
+			phoneLabel.BindingContext = this;
+//			phoneLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.PhoneNumber);
+
+			return new ContentView{ Content = phoneLabel };
 		}
 	}
 }
