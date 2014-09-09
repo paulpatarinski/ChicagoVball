@@ -47,7 +47,7 @@ namespace Core.Helpers.Controls
 			Content = _mapGrid;
 		}
 
-		static double COLLAPSED_FOOTER_HEIGHT = 0.13;
+		static double COLLAPSED_FOOTER_HEIGHT = 0.16;
 		static double COLLAPSED_MAP_HEIGHT = 0.3;
 		static double EXPANDED_MAP_HEIGHT = 0.87;
 		static double EXPANDED_FOOTER_HEIGHT = 0.7;
@@ -105,7 +105,7 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (1, GridUnitType.Star)
 					},
-				}
+				}, Padding = new Thickness (18, 8, 18, 0), RowSpacing = 10, BackgroundColor = Colors.TransparentWhite
 			};
 
 			var footerGrid = new Grid {
@@ -150,7 +150,7 @@ namespace Core.Helpers.Controls
 			addressLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
 
 
-			var pinInfoStackLayout = new StackLayout { Padding = new Thickness (22, 8, 0, 0)	};
+			var pinInfoStackLayout = new StackLayout { };
 
 			pinInfoStackLayout.Children.Add (placeNameLabel);
 			pinInfoStackLayout.Children.Add (addressLabel);
@@ -163,10 +163,10 @@ namespace Core.Helpers.Controls
 				TextColor = Colors.DarkBlue,
 				Font = Font.SystemFontOfSize (14),
 				Orientation = ImageOrientation.ImageOnTop,
-				ImageHeightRequest = 75,
-				ImageWidthRequest = 75,
+				ImageHeightRequest = 85,
+				ImageWidthRequest = 85,
 				BackgroundColor = Colors.TransparentWhite,
-				VerticalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.Start,
 				HorizontalOptions = LayoutOptions.Center
 			};
 
@@ -182,31 +182,124 @@ namespace Core.Helpers.Controls
 
 		ContentView CreateFooterDetails ()
 		{
-			var phoneLabel = new Label {
-				Text = "773 733 2333",
-				TextColor = Color.Gray,
+			var footerDetailsGrid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (0.3, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.6, GridUnitType.Star)
+					}
+
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (1, GridUnitType.Star)
+					},
+				}, RowSpacing = 10
 			};
 
-			Device.OnPlatform (iOS: () => phoneLabel.Font = Font.SystemFontOfSize (14),
-				Android: () => phoneLabel.Font = Font.SystemFontOfSize (14),
-				WinPhone: () => phoneLabel.Font = Font.SystemFontOfSize (18));
+			footerDetailsGrid.Children.Add (CreateActionButtonsGrid (), 0, 0);
+			footerDetailsGrid.Children.Add (CreateScheduleGrid (), 0, 1);
 
-			phoneLabel.BindingContext = _customMap;
-			phoneLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.PhoneNumber);
+			return new ContentView{ Content = footerDetailsGrid };
+		}
 
-			var addressLabel = new Label {
-				Text = "Address Shows Here",
-				TextColor = Color.Gray,
+		Grid CreateActionButtonsGrid ()
+		{
+			var callButton = new ImageButton () {
+				Image = "call_icon",
+				Text = "Call",
+				TextColor = Colors.DarkBlue,
+				Font = Font.SystemFontOfSize (14),
+				Orientation = ImageOrientation.ImageOnTop,
+				ImageHeightRequest = 75,
+				ImageWidthRequest = 75,
+				WidthRequest = 100,
+				BackgroundColor = Colors.TransparentWhite,
+				VerticalOptions = LayoutOptions.Center,
+				HorizontalOptions = LayoutOptions.Center
 			};
 
-			Device.OnPlatform (iOS: () => addressLabel.Font = Font.SystemFontOfSize (14),
-				Android: () => addressLabel.Font = Font.SystemFontOfSize (14),
-				WinPhone: () => addressLabel.Font = Font.SystemFontOfSize (18));
+			var shareButton = new ImageButton () {
+				Image = "share_icon",
+				Text = "Share",
+				TextColor = Colors.DarkBlue,
+				Font = Font.SystemFontOfSize (14),
+				Orientation = ImageOrientation.ImageOnTop,
+				ImageHeightRequest = 75,
+				ImageWidthRequest = 75,
+				WidthRequest = 100,
+				BackgroundColor = Colors.TransparentWhite,
+				VerticalOptions = LayoutOptions.Center,
+				HorizontalOptions = LayoutOptions.Center
+			};
 
-			addressLabel.BindingContext = _customMap;
-			addressLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.PhoneNumber);
+			var actionButtonsGrid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.5, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.5, GridUnitType.Star)
+					},
+				}, BackgroundColor = Colors.TransparentWhite
+			};
 
-			return new ContentView{ Content = addressLabel };
+			actionButtonsGrid.Children.Add (callButton, 0, 0);
+			actionButtonsGrid.Children.Add (shareButton, 1, 0);
+
+			return actionButtonsGrid;
+		}
+
+		Grid CreateScheduleGrid ()
+		{
+			var scheduleGrid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.15, GridUnitType.Star)
+					},			
+
+				}, BackgroundColor = Colors.TransparentWhite
+			};
+
+			scheduleGrid.Children.Add (new Label{ Text = "Mon", TextColor = Color.Black }, 0, 0);
+			scheduleGrid.Children.Add (new Label{ Text = "Tue", TextColor = Color.Black }, 1, 0);
+			scheduleGrid.Children.Add (new Label{ Text = "Wed", TextColor = Color.Black }, 2, 0);
+			scheduleGrid.Children.Add (new Label{ Text = "Thu", TextColor = Color.Black }, 3, 0);
+			scheduleGrid.Children.Add (new Label{ Text = "Fri", TextColor = Color.Black }, 4, 0);
+			scheduleGrid.Children.Add (new Label{ Text = "Sat", TextColor = Color.Black }, 5, 0);
+			scheduleGrid.Children.Add (new Label{ Text = "Sun", TextColor = Color.Black }, 6, 0);
+
+			return scheduleGrid;
 		}
 
 		void ShowFooterDetails ()
