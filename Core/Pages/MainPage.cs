@@ -29,7 +29,7 @@ namespace Core.Pages
 			map.BindingContext = _viewModel;
 			map.SetBinding<MainPageViewModel> (CustomMap.CustomPinsProperty, x => x.VolleyballLocations);
 		
-			Content = map.GetMapGrid ();
+			Content = new CustomMapContentView (map);
 		}
 	}
 }

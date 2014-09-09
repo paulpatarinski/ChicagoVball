@@ -10,15 +10,15 @@ namespace Core.ViewModels
 {
 	public class MainPageViewModel : BaseViewModel
 	{
-	  private readonly IVolleyballLocationService _volleyballLocationService;
+		private readonly IVolleyballLocationService _volleyballLocationService;
 
-	  public MainPageViewModel (IVolleyballLocationService volleyballLocationService)
+		public MainPageViewModel (IVolleyballLocationService volleyballLocationService)
 		{
-		  _volleyballLocationService = volleyballLocationService;
-		  LoadVolleyballLocationsAsync ();
+			_volleyballLocationService = volleyballLocationService;
+			LoadVolleyballLocationsAsync ();
 		}
 
-	  ObservableCollection<CustomPin> _volleyballLocations;
+		ObservableCollection<CustomPin> _volleyballLocations;
 
 		public ObservableCollection<CustomPin> VolleyballLocations {
 			get {
@@ -32,14 +32,13 @@ namespace Core.ViewModels
 
 		public async Task LoadVolleyballLocationsAsync ()
 		{
-			Mapper.CreateMap<VolleyballLocationModel, CustomPin> ().ForMember (dest => dest.Position, opt => opt.MapFrom (src => new Position (src.Latitude, src.Longitude)));
+			Mapper.CreateMap<VolleyballLocationModel, CustomPin> ().ForMember (dest => dest.Position, opt => opt.MapFrom (src => new Position (src.Latitude, src.Longitude))).ForMember (dest => dest.PhoneNumber, opt => opt.MapFrom (src => src.PhoneNumber));
 
-		  var locations = await _volleyballLocationService.GetLocationsAsync();
+			var locations = await _volleyballLocationService.GetLocationsAsync ();
      
-      foreach (var location in locations)
-      {
-        VolleyballLocations.Add(Mapper.Map<VolleyballLocationModel, CustomPin>(location));
-      }
+			foreach (var location in locations) {
+				VolleyballLocations.Add (Mapper.Map<VolleyballLocationModel, CustomPin> (location));
+			}
 		}
 	}
 }

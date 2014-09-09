@@ -9,45 +9,38 @@ using Core.Helpers.Controls;
 using Android.Content;
 using ChiVball.Android;
 
-[assembly: ExportRenderer (typeof(Core.Helpers.Controls.CustomMap), typeof(Android.MapViewRenderer))]
+[assembly: ExportRenderer (typeof(Core.Helpers.Controls.CustomMap), typeof(Android.CustomMapRenderer))]
 namespace Android
 {
-	public class MapViewRenderer : MapRenderer
+	public class CustomMapRenderer : MapRenderer
 	{
 		bool _isDrawnDone;
+
+		CustomMap _customMap { get { return this.Element as CustomMap; } }
+
+		Grid _customMapGrid { get { return _customMap.Parent as Grid; } }
+
+		CustomMapContentView _customMapContentView { get { return _customMap.Parent.Parent as CustomMapContentView; } }
+
 
 		protected override void OnElementPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			base.OnElementPropertyChanged (sender, e);
 
 			var androidMapView = (MapView)Control;
-			var formsMap = (CustomMap)sender;
-
-			if (e.PropertyName == CustomMap.FooterHeightProperty.PropertyName) {
-				var customMap = (CustomMap)sender;
-
-				var grid = (Grid)customMap.Parent;
-
-				var mapRow = grid.RowDefinitions [0];
-				var footerRow = grid.RowDefinitions [1];
-
-				mapRow.Height = new GridLength (customMap.MapHeight, GridUnitType.Star);
-				footerRow.Height = new GridLength (customMap.FooterHeight, GridUnitType.Star);
-
-			}
 
 			if (e.PropertyName.Equals ("VisibleRegion") && !_isDrawnDone) {
 				androidMapView.Map.Clear ();
 
-				formsMap.NavigationButton.Clicked += NavigationButtonClicked;
+				_customMapContentView.NavigationButton.Clicked += NavigationButtonClicked;
 				androidMapView.Map.MarkerClick += HandleMarkerClick;
 				androidMapView.Map.MapClick += HandleMapClick;
-				androidMapView.Map.MyLocationEnabled = formsMap.IsShowingUser;
+				androidMapView.Map.MyLocationEnabled = _customMap.IsShowingUser;
 
 				//The footer overlays the zoom controls
 				androidMapView.Map.UiSettings.ZoomControlsEnabled = false;
 
-				var formsPins = formsMap.CustomPins;
+				var formsPins = _customMap.CustomPins;
 
 				foreach (var formsPin in formsPins) {
 					var markerWithIcon = new MarkerOptions ();
@@ -83,9 +76,7 @@ namespace Android
 
 		void HandleMapClick (object sender, GoogleMap.MapClickEventArgs e)
 		{
-			var customMapControl = this.Element as CustomMap;
-
-			customMapControl.ShowFooter = false;
+			_customMapContentView.ShowFooter = false;
 
 			ResetPrevioslySelectedMarker ();
 		}
@@ -107,18 +98,14 @@ namespace Android
 
 			currentMarker.SetIcon (BitmapDescriptorFactory.DefaultMarker ());
 
-			var customMapControl = this.Element as CustomMap;
-
 			var formsPin = new CustomPin {
 				Label = currentMarker.Title,
 				Address = currentMarker.Snippet,
 				Position = new Position (currentMarker.Position.Latitude, currentMarker.Position.Longitude)
 			};
 
-		
-
-			customMapControl.SelectedPin = formsPin;
-			customMapControl.ShowFooter = true;
+			_customMap.SelectedPin = formsPin;
+			_customMapContentView.ShowFooter = true;
 
 			_previouslySelectedMarker = currentMarker;
 		}
