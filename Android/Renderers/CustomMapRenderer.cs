@@ -98,13 +98,7 @@ namespace Android
 
 			currentMarker.SetIcon (BitmapDescriptorFactory.DefaultMarker ());
 
-			var formsPin = new CustomPin {
-				Label = currentMarker.Title,
-				Address = currentMarker.Snippet,
-				Position = new Position (currentMarker.Position.Latitude, currentMarker.Position.Longitude)
-			};
-
-			_customMap.SelectedPin = formsPin;
+			_customMap.SelectedPinAddress = currentMarker.Snippet;
 			_customMapContentView.ShowFooter = true;
 
 			_previouslySelectedMarker = currentMarker;

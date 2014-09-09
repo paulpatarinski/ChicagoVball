@@ -192,9 +192,21 @@ namespace Core.Helpers.Controls
 				WinPhone: () => phoneLabel.Font = Font.SystemFontOfSize (18));
 
 			phoneLabel.BindingContext = _customMap;
-			//			phoneLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.PhoneNumber);
+			phoneLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.PhoneNumber);
 
-			return new ContentView{ Content = phoneLabel };
+			var addressLabel = new Label {
+				Text = "Address Shows Here",
+				TextColor = Color.Gray,
+			};
+
+			Device.OnPlatform (iOS: () => addressLabel.Font = Font.SystemFontOfSize (14),
+				Android: () => addressLabel.Font = Font.SystemFontOfSize (14),
+				WinPhone: () => addressLabel.Font = Font.SystemFontOfSize (18));
+
+			addressLabel.BindingContext = _customMap;
+			addressLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.PhoneNumber);
+
+			return new ContentView{ Content = addressLabel };
 		}
 
 		void ShowFooterDetails ()
