@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Models;
+using Core.Helpers.Controls;
+using System;
 
 namespace Core.Services
 {
@@ -17,7 +19,13 @@ namespace Core.Services
 				Latitude = 41.965097,
 				Longitude = -87.634818,
 				PhoneNumber = "Unknown",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 1, 1, 17, 30, 0)
+						,
+						EndTime = new DateTime (2014, 1, 1, 21, 0, 0)
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -26,7 +34,12 @@ namespace Core.Services
 				Latitude = 41.913559,
 				Longitude = -87.622498,
 				PhoneNumber = "Unknown",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 1, 1, 17, 30, 0),
+						EndTime = new DateTime (2014, 1, 1, 9, 0, 0)
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {

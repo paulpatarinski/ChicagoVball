@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms.Maps;
+using System.Collections.Generic;
 
 namespace Core.Helpers.Controls
 {
@@ -14,6 +15,7 @@ namespace Core.Helpers.Controls
 
 		public Position Position { get; set; }
 
+		public List<ScheduleEntry> ScheduleEntries { get; set; }
 	}
 }
 

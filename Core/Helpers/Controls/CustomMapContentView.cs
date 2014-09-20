@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Core.Helpers.Controls;
+using System.Collections.Generic;
 
 namespace Core.Helpers.Controls
 {
@@ -267,37 +268,28 @@ namespace Core.Helpers.Controls
 				},
 				ColumnDefinitions = new ColumnDefinitionCollection {
 					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
+						Width = new GridLength (1, GridUnitType.Star)
 					},
-					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.15, GridUnitType.Star)
-					},			
+						
 
 				}, BackgroundColor = Colors.TransparentWhite
 			};
 
-			scheduleGrid.Children.Add (new Label{ Text = "Mon", TextColor = Color.Black }, 0, 0);
-			scheduleGrid.Children.Add (new Label{ Text = "Tue", TextColor = Color.Black }, 1, 0);
-			scheduleGrid.Children.Add (new Label{ Text = "Wed", TextColor = Color.Black }, 2, 0);
-			scheduleGrid.Children.Add (new Label{ Text = "Thu", TextColor = Color.Black }, 3, 0);
-			scheduleGrid.Children.Add (new Label{ Text = "Fri", TextColor = Color.Black }, 4, 0);
-			scheduleGrid.Children.Add (new Label{ Text = "Sat", TextColor = Color.Black }, 5, 0);
-			scheduleGrid.Children.Add (new Label{ Text = "Sun", TextColor = Color.Black }, 6, 0);
+			var listview = new ListView ();
+		
+			var itemTemplate = new DataTemplate (typeof(HorizontalCell));
+
+			itemTemplate.SetBinding (HorizontalCell.TextProperty, "Day");
+			itemTemplate.SetValue (HorizontalCell.TextColorProperty, Color.Black);
+			itemTemplate.SetBinding (HorizontalCell.DetailProperty, "HoursOfOperation");
+			itemTemplate.SetValue (HorizontalCell.DetailColorProperty, Color.Gray);
+
+			listview.ItemTemplate = itemTemplate;
+			listview.BindingContext = _customMap;
+			listview.SetBinding<CustomMap> (ListView.ItemsSourceProperty, vm => vm.SelectedPin.ScheduleEntries);
+
+
+			scheduleGrid.Children.Add (listview, 0, 0);
 
 			return scheduleGrid;
 		}

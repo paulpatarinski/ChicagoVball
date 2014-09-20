@@ -1,4 +1,7 @@
-﻿namespace Core.Models
+﻿using Core.Helpers.Controls;
+using System.Collections.Generic;
+
+namespace Core.Models
 {
 	public class VolleyballLocationModel
 	{
@@ -13,5 +16,11 @@
 		public double Latitude { get; set; }
 
 		public double Longitude { get; set; }
+
+		/// <summary>
+		/// A list of all the days this location is open
+		/// </summary>
+		/// <value>The schedule entries.</value>
+		public IEnumerable<ScheduleEntryModel> ScheduleEntries { get; set; }
 	}
 }
