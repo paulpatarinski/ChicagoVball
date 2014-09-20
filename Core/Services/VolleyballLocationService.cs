@@ -42,8 +42,10 @@ namespace Core.Services
 				PhoneNumber = "Unknown",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 1, 1, 17, 30, 0),
-						EndTime = new DateTime (2014, 1, 1, 9, 0, 0)
+					//Sunday
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 21, 9, 0, 0)
+							,
+						EndTime = new DateTime (2014, 9, 21, 13, 0, 0)
 					}
 				}
 			});
@@ -54,7 +56,8 @@ namespace Core.Services
 				Latitude = 41.928497,
 				Longitude = -87.686766,
 				PhoneNumber = "(773) 486-7300",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+
 			});
 
 
