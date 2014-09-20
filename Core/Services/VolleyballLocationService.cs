@@ -21,9 +21,15 @@ namespace Core.Services
 				PhoneNumber = "Unknown",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 1, 1, 17, 30, 0)
+					//Tuesday
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 16, 16, 30, 0)
 						,
-						EndTime = new DateTime (2014, 1, 1, 21, 0, 0)
+						EndTime = new DateTime (2014, 9, 16, 21, 0, 0)
+					},
+					//Saturday
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 20, 9, 0, 0)
+							,
+						EndTime = new DateTime (2014, 9, 20, 16, 0, 0)
 					}
 				}
 			});

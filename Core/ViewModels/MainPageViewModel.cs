@@ -34,9 +34,7 @@ namespace Core.ViewModels
 		public async Task LoadVolleyballLocationsAsync ()
 		{
 			Mapper.CreateMap<VolleyballLocationModel, CustomPin> ().ForMember (dest => dest.Position, opt => opt.MapFrom (src => new Position (src.Latitude, src.Longitude))).ForMember (dest => dest.PhoneNumber, opt => opt.MapFrom (src => src.PhoneNumber)).ForMember (dest => dest.ScheduleEntries, opt => opt.ResolveUsing<ScheduleEntryResolver> ().FromMember (src => src.ScheduleEntries == null ? new List<ScheduleEntryModel> () : src.ScheduleEntries));
-
 				
-//				
 			var locations = await _volleyballLocationService.GetLocationsAsync ();
      
 			foreach (var location in locations) {
