@@ -49,9 +49,9 @@ namespace Core.Helpers.Controls
 		}
 
 		static double COLLAPSED_FOOTER_HEIGHT = 0.16;
-		static double COLLAPSED_MAP_HEIGHT = 0.3;
+		static double COLLAPSED_MAP_HEIGHT = 0.37;
 		static double EXPANDED_MAP_HEIGHT = 0.87;
-		static double EXPANDED_FOOTER_HEIGHT = 0.7;
+		static double EXPANDED_FOOTER_HEIGHT = 0.63;
 
 		double _footerHeight { get { return _mapGrid.RowDefinitions [1].Height.Value; } set { _mapGrid.RowDefinitions [1].Height = new GridLength (value, GridUnitType.Star); } }
 
