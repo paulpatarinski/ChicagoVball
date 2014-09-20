@@ -18,7 +18,7 @@ namespace Core.Services
 				Address = "200 W Montrose Dr, Chicago, IL",
 				Latitude = 41.965097,
 				Longitude = -87.634818,
-				PhoneNumber = "Unknown",
+				PhoneNumber = "(312) 742-5121",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					//Tuesday
@@ -39,7 +39,7 @@ namespace Core.Services
 				Address = "1603 N Lake Shore Dr, Chicago, IL",
 				Latitude = 41.913559,
 				Longitude = -87.622498,
-				PhoneNumber = "Unknown",
+				PhoneNumber = "(312) 742-5121",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					//Sunday

@@ -219,7 +219,12 @@ namespace Core.Helpers.Controls
 				WidthRequest = 100,
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Center,
-				HorizontalOptions = LayoutOptions.Center
+				HorizontalOptions = LayoutOptions.Center,
+			};
+
+			callButton.Clicked += (sender, e) => {
+				var phoneNumber = _customMap.SelectedPin.PhoneNumber;
+				DependencyService.Get<IPhoneService> ().DialNumber (phoneNumber);
 			};
 
 			var shareButton = new ImageButton () {
