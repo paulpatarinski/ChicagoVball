@@ -275,8 +275,13 @@ namespace Core.Helpers.Controls
 				}, BackgroundColor = Colors.TransparentWhite
 			};
 
-			var listview = new ListView ();
+			var listview = new ListView { };
 		
+			//Don't allow selection
+			listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+				listview.SelectedItem = null;
+			};
+
 			var itemTemplate = new DataTemplate (typeof(HorizontalCell));
 
 			itemTemplate.SetBinding (HorizontalCell.TextProperty, "Day");
