@@ -7,6 +7,7 @@ using Android.OS;
 using Xamarin.Forms.Platform.Android;
 using Core;
 using Android.Net;
+using Android.Views;
 
 
 namespace ChiVball.Android
@@ -18,6 +19,7 @@ namespace ChiVball.Android
 		{
 			base.OnCreate (bundle);
 
+			this.Window.AddFlags (WindowManagerFlags.Fullscreen); //to hide
 			Xamarin.FormsMaps.Init (this, bundle);
 			Xamarin.Forms.Forms.Init (this, bundle);
 
