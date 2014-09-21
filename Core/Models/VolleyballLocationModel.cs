@@ -22,5 +22,7 @@ namespace Core.Models
 		/// </summary>
 		/// <value>The schedule entries.</value>
 		public IEnumerable<ScheduleEntryModel> ScheduleEntries { get; set; }
+
+		public IEnumerable<UrlModel> Others { get; set; }
 	}
 }

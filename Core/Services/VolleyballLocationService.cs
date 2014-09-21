@@ -31,7 +31,8 @@ namespace Core.Services
 							,
 						EndTime = new DateTime (2014, 9, 20, 16, 0, 0)
 					}
-				}
+				},
+				Others = new List<UrlModel>{ new UrlModel{ Key = "Website", Value = "https://www.google.com" } }
 			});
 
 			locations.Add (new VolleyballLocationModel {

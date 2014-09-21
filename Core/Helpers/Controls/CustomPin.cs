@@ -16,6 +16,12 @@ namespace Core.Helpers.Controls
 		public Position Position { get; set; }
 
 		public List<ScheduleEntry> ScheduleEntries { get; set; }
+
+		/// <summary>
+		/// Other data relevant to the pin. ie. Website Url, 
+		/// </summary>
+		/// <value>The others.</value>
+		public List<Url> Others { get; set; }
 	}
 }
 

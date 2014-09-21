@@ -6,13 +6,14 @@ namespace Core
 {
 	public class HorizontalCell : ViewCell
 	{
+
 		public HorizontalCell ()
 		{
 			Grid grid = new Grid {
 				Padding = new Thickness (5, 0, 5, 0),
 				ColumnDefinitions = {
-					new ColumnDefinition { Width = new GridLength (0.5, GridUnitType.Star) },
-					new ColumnDefinition { Width = new GridLength (0.5, GridUnitType.Star) },
+					new ColumnDefinition { Width = new GridLength (0.4, GridUnitType.Star) },
+					new ColumnDefinition { Width = new GridLength (0.6, GridUnitType.Star) },
 				},
 				RowDefinitions = {
 					new RowDefinition { Height = new GridLength (1, GridUnitType.Star) }
@@ -48,7 +49,7 @@ namespace Core
 
 		public static readonly BindableProperty DetailColorProperty =
 			BindableProperty.Create<HorizontalCell, Color> (
-				p => p.DetailColor, Color.Default);
+				p => p.DetailColor, Color.Gray);
 
 		public static readonly BindableProperty TextProperty =
 			BindableProperty.Create<HorizontalCell, string> (
@@ -56,7 +57,7 @@ namespace Core
 
 		public static readonly BindableProperty TextColorProperty =
 			BindableProperty.Create<HorizontalCell, Color> (
-				p => p.TextColor, Color.Default);
+				p => p.TextColor, Color.Black);
 
 		public string Detail {
 			get {

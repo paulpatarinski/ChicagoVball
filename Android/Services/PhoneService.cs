@@ -5,6 +5,7 @@ using Android.Net;
 using Xamarin.Forms;
 using Core;
 using ChiVball.Android;
+using Android.Net;
 
 [assembly: Dependency (typeof(PhoneService))]
 namespace ChiVball.Android
@@ -151,6 +152,17 @@ namespace ChiVball.Android
 		public void DialNumber (string number)
 		{
 			number.StartActivity (new Intent (Intent.ActionDial, Uri.Parse ("tel:" + number)));
+		}
+
+		public void OpenBrowser (string url)
+		{
+			Uri uri = Uri.Parse (url);
+			Intent intent = new Intent (Intent.ActionView);
+			intent.SetData (uri);
+
+			Intent chooser = Intent.CreateChooser (intent, "Open with");
+
+			this.StartActivity (chooser);
 		}
 
 		public void SendSMS (string to, string body)

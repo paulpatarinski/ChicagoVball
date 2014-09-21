@@ -28,10 +28,10 @@ namespace Core.Helpers.Controls
 			};
 
 			_mapGrid.Children.Add (_customMap, 0, 0);
+			_mapGrid.Children.Add (CreateFooter (), 0, 1);
+		
 			Grid.SetRowSpan (_customMap, 2);
 			_mapGrid.RowSpacing = 0;
-
-			_mapGrid.Children.Add (CreateFooter (), 0, 1);
 
 			//Bind the footer to the ShowFooter property
 			_mapGrid.BindingContext = this;
@@ -44,6 +44,7 @@ namespace Core.Helpers.Controls
 					ExpandMap ();
 				}
 			}));
+
 
 			Content = _mapGrid;
 		}
@@ -106,7 +107,7 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (1, GridUnitType.Star)
 					},
-				}, Padding = new Thickness (18, 8, 0, 0), RowSpacing = 10, BackgroundColor = Colors.TransparentWhite
+				}, RowSpacing = 10
 			};
 
 			var footerGrid = new Grid {
@@ -122,7 +123,7 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (0.25, GridUnitType.Star)
 					},
-				}
+				}, BackgroundColor = Color.White, Padding = new Thickness (18, 8, 0, 0)
 			};
 
 
@@ -168,7 +169,7 @@ namespace Core.Helpers.Controls
 				ImageWidthRequest = 85,
 				WidthRequest = 85,
 				HeightRequest = 85,
-				BackgroundColor = Colors.TransparentWhite,
+				BackgroundColor = Color.White,
 				VerticalOptions = LayoutOptions.Start,
 				HorizontalOptions = LayoutOptions.Center
 			};
@@ -180,10 +181,10 @@ namespace Core.Helpers.Controls
 
 			_footerMasterGrid.Children.Add (footerGrid, 0, 0);
 
-			return new ContentView{ Content = _footerMasterGrid, BackgroundColor = Colors.TransparentWhite };
+			return new ContentView{ Content = _footerMasterGrid, BackgroundColor = Color.White, Opacity = 0.9 };
 		}
 
-		ContentView CreateFooterDetails ()
+		ScrollView CreateFooterDetails ()
 		{
 			var footerDetailsGrid = new Grid {
 				RowDefinitions = new RowDefinitionCollection {
@@ -191,7 +192,13 @@ namespace Core.Helpers.Controls
 						Height = new GridLength (0.3, GridUnitType.Star)
 					},
 					new RowDefinition {
-						Height = new GridLength (0.6, GridUnitType.Star)
+						Height = new GridLength (0.5, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.5, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.5, GridUnitType.Star)
 					}
 
 				},
@@ -199,13 +206,14 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (1, GridUnitType.Star)
 					},
-				}, RowSpacing = 10, Padding = new Thickness (0, 0, 18, 0)
+				}, RowSpacing = 10, Padding = new Thickness (0, 0, 0, 0)
 			};
 
 			footerDetailsGrid.Children.Add (CreateActionButtonsGrid (), 0, 0);
 			footerDetailsGrid.Children.Add (CreateScheduleGrid (), 0, 1);
+			footerDetailsGrid.Children.Add (CreateOtherView (), 0, 2);
 
-			return new ContentView{ Content = footerDetailsGrid };
+			return new ScrollView{ Content = footerDetailsGrid };
 		}
 
 		Grid CreateActionButtonsGrid ()
@@ -220,7 +228,7 @@ namespace Core.Helpers.Controls
 				ImageWidthRequest = 75,
 				HeightRequest = 80,
 				WidthRequest = 100,
-				BackgroundColor = Colors.TransparentWhite,
+				BackgroundColor = Color.White,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center,
 			};
@@ -240,7 +248,7 @@ namespace Core.Helpers.Controls
 				ImageWidthRequest = 75,
 				HeightRequest = 80,
 				WidthRequest = 100,
-				BackgroundColor = Colors.TransparentWhite,
+				BackgroundColor = Color.White,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center
 			};
@@ -258,7 +266,7 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (0.5, GridUnitType.Star)
 					},
-				}, BackgroundColor = Colors.TransparentWhite
+				}, BackgroundColor = Color.White
 			};
 
 			actionButtonsGrid.Children.Add (callButton, 0, 0);
@@ -281,7 +289,7 @@ namespace Core.Helpers.Controls
 					},
 						
 
-				}, BackgroundColor = Colors.TransparentWhite
+				}, BackgroundColor = Color.White, Padding = new Thickness (18, 0, 18, 0)
 			};
 
 			var listview = new ListView { };
@@ -308,6 +316,41 @@ namespace Core.Helpers.Controls
 			return scheduleGrid;
 		}
 
+		View CreateOtherView ()
+		{
+			var contentView = new ContentView { Padding = new Thickness (18, 0, 18, 0), BackgroundColor = Color.White };
+
+		
+			var listview = new ListView { };
+
+			//Don't allow selection
+			listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
+				var url = e.SelectedItem as Url;
+				
+				if (url != null) {
+					DependencyService.Get<IPhoneService> ().OpenBrowser (url.Value);
+				}
+
+				listview.SelectedItem = null;
+			};
+
+			var itemTemplate = new DataTemplate (typeof(HorizontalCell));
+
+			itemTemplate.SetBinding (HorizontalCell.TextProperty, "Key");
+			itemTemplate.SetValue (HorizontalCell.TextColorProperty, Color.Black);
+			itemTemplate.SetBinding (HorizontalCell.DetailProperty, "Value");
+			itemTemplate.SetValue (HorizontalCell.DetailColorProperty, Color.Gray);
+
+			listview.ItemTemplate = itemTemplate;
+			listview.BindingContext = _customMap;
+			listview.SetBinding<CustomMap> (ListView.ItemsSourceProperty, vm => vm.SelectedPin.Others);
+
+
+			contentView.Content = listview;
+
+			return contentView;
+		}
+
 		void ShowFooterDetails ()
 		{
 			_footerMasterGrid.RowDefinitions.Add (
@@ -317,7 +360,9 @@ namespace Core.Helpers.Controls
 			);
 			_footerMasterGrid.RowDefinitions [0].Height = new GridLength (0.2, GridUnitType.Star);
 
-			_footerMasterGrid.Children.Add (CreateFooterDetails (), 0, 1);
+			var footerDetails = CreateFooterDetails ();
+
+			_footerMasterGrid.Children.Add (footerDetails, 0, 1);
 		}
 
 		void HideFooterDetails ()

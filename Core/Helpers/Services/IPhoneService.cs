@@ -44,6 +44,8 @@ namespace Core
 		/// </summary>
 		bool CanSendSMS { get; }
 
+		void OpenBrowser (string url);
+
 		/// <summary>
 		/// Opens native dialog to dial the specified number.
 		/// </summary>
