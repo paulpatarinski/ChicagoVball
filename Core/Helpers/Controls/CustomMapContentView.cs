@@ -106,7 +106,7 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (1, GridUnitType.Star)
 					},
-				}, Padding = new Thickness (18, 8, 18, 0), RowSpacing = 10, BackgroundColor = Colors.TransparentWhite
+				}, Padding = new Thickness (18, 8, 0, 0), RowSpacing = 10, BackgroundColor = Colors.TransparentWhite
 			};
 
 			var footerGrid = new Grid {
@@ -166,6 +166,8 @@ namespace Core.Helpers.Controls
 				Orientation = ImageOrientation.ImageOnTop,
 				ImageHeightRequest = 85,
 				ImageWidthRequest = 85,
+				WidthRequest = 85,
+				HeightRequest = 85,
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Start,
 				HorizontalOptions = LayoutOptions.Center
@@ -197,7 +199,7 @@ namespace Core.Helpers.Controls
 					new ColumnDefinition {
 						Width = new GridLength (1, GridUnitType.Star)
 					},
-				}, RowSpacing = 10
+				}, RowSpacing = 10, Padding = new Thickness (0, 0, 18, 0)
 			};
 
 			footerDetailsGrid.Children.Add (CreateActionButtonsGrid (), 0, 0);
@@ -216,6 +218,7 @@ namespace Core.Helpers.Controls
 				Orientation = ImageOrientation.ImageOnTop,
 				ImageHeightRequest = 75,
 				ImageWidthRequest = 75,
+				HeightRequest = 80,
 				WidthRequest = 100,
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Center,
@@ -235,6 +238,7 @@ namespace Core.Helpers.Controls
 				Orientation = ImageOrientation.ImageOnTop,
 				ImageHeightRequest = 75,
 				ImageWidthRequest = 75,
+				HeightRequest = 80,
 				WidthRequest = 100,
 				BackgroundColor = Colors.TransparentWhite,
 				VerticalOptions = LayoutOptions.Center,
