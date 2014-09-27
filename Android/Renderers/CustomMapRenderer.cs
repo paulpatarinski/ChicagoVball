@@ -32,7 +32,6 @@ namespace Android
 			if (e.PropertyName.Equals ("VisibleRegion") && !_isDrawnDone) {
 				androidMapView.Map.Clear ();
 
-				_customMapContentView.NavigationButton.Clicked += NavigationButtonClicked;
 				androidMapView.Map.MarkerClick += HandleMarkerClick;
 				androidMapView.Map.MapClick += HandleMapClick;
 				androidMapView.Map.MyLocationEnabled = _customMap.IsShowingUser;
@@ -64,14 +63,6 @@ namespace Android
 		Marker _previouslySelectedMarker {
 			get;
 			set;
-		}
-
-		void NavigationButtonClicked (object sender, EventArgs e)
-		{
-			var activity = this.Context as MainActivity;
-
-			if (activity != null)
-				activity.LaunchGoogleMaps (_previouslySelectedMarker.Snippet);
 		}
 
 		void HandleMapClick (object sender, GoogleMap.MapClickEventArgs e)

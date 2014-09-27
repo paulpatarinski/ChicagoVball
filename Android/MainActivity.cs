@@ -27,12 +27,7 @@ namespace ChiVball.Android
 
 		}
 
-		public  void LaunchGoogleMaps (string address)
-		{
-			var geoUri = Uri.Parse (string.Format ("geo:0,0?q={0}", address));
-			var mapIntent = new Intent (Intent.ActionView, geoUri);
-			StartActivity (mapIntent);
-		}
+
 	}
 }
 

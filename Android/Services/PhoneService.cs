@@ -179,6 +179,13 @@ namespace ChiVball.Android
 			this.StartActivity (sendIntent);
 		}
 
+		public void LaunchMap (string address)
+		{
+			var geoUri = Uri.Parse (string.Format ("geo:0,0?q={0}", address));
+			var mapIntent = new Intent (Intent.ActionView, geoUri);
+			this.StartActivity (mapIntent);
+		}
+
 		#endregion
 	}
 }

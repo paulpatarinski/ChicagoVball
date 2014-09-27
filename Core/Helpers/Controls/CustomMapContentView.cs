@@ -65,8 +65,6 @@ namespace Core.Helpers.Controls
 
 		CustomMap _customMap;
 
-		public Button NavigationButton	{ get; set; }
-
 		public static readonly BindableProperty ShowFooterProperty = BindableProperty.Create<CustomMapContentView, bool> (x => x.ShowFooter, false);
 
 		public bool ShowFooter {
@@ -160,30 +158,82 @@ namespace Core.Helpers.Controls
 			pinInfoStackLayout.Children.Add (addressLabel);
 			pinInfoStackLayout.Spacing = 0;
 
-			//todo : replace with ImageButton when Labs is fixed
-			var navButton = new ImageButton () {
-				Image = "navigate_icon",
-				Text = "Route",
-				TextColor = Colors.DarkBlue,
-				Font = Font.SystemFontOfSize (14),
-				Orientation = ImageOrientation.ImageOnTop,
-				ImageHeightRequest = 85,
-				ImageWidthRequest = 85,
-				WidthRequest = 85,
-				HeightRequest = 85,
-				BackgroundColor = Color.White,
-				VerticalOptions = LayoutOptions.Start,
-				HorizontalOptions = LayoutOptions.Center
-			};
-
-			NavigationButton = navButton;
-
 			footerGrid.Children.Add (pinInfoStackLayout, 0, 0);
-			footerGrid.Children.Add (new ContentView (){ Content = navButton }, 1, 0);
+			footerGrid.Children.Add (CreateNavigationButton (), 1, 0);
 
 			_footerMasterGrid.Children.Add (footerGrid, 0, 0);
 
 			return new ContentView{ Content = _footerMasterGrid, BackgroundColor = Color.White, Opacity = 0.9 };
+		}
+
+		ContentView CreateNavigationButton ()
+		{
+			var grid = new Grid {
+				RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (0.12, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.38, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.4, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.1, GridUnitType.Star)
+					},
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (1, GridUnitType.Star)
+					},
+
+				}, BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.Center, RowSpacing = 0
+			};
+
+			var navImageGrid = new Grid {RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+				ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.28, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.44, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.28, GridUnitType.Star)
+					},
+
+				}
+			};
+
+			var navImage = new Image () {			
+				Source = "navigate_icon",
+				Aspect = Aspect.Fill,
+				HorizontalOptions = LayoutOptions.Center
+			};
+
+			grid.GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
+				var address = _customMap.SelectedPin.Address;
+				DependencyService.Get<IPhoneService> ().LaunchMap (address);
+			}));
+
+			navImageGrid.Children.Add (navImage, 1, 0);
+
+			var label = new Label {
+				Text = "Route",
+				Font = Font.SystemFontOfSize (16),
+				TextColor = Colors.DarkBlue,
+				HorizontalOptions = LayoutOptions.Center
+			};
+
+			grid.Children.Add (navImageGrid, 0, 1);
+			grid.Children.Add (label, 0, 2);
+
+			return new ContentView { Content = grid };
 		}
 
 		ScrollView CreateFooterDetails ()

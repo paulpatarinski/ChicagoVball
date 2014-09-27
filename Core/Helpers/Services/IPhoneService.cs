@@ -55,6 +55,8 @@ namespace Core
 		void SendSMS (string to, string body);
 
 		void ShareText (string text);
+
+		void LaunchMap (string address);
 	}
 }
 
