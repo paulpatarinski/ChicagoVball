@@ -245,7 +245,7 @@ namespace Core.Helpers.Controls
 						Height = new GridLength (0.3, GridUnitType.Star)
 					},
 					new RowDefinition {
-						Height = new GridLength (0.5, GridUnitType.Star)
+						Height = new GridLength (0.32, GridUnitType.Star)
 					},
 					new RowDefinition {
 						Height = new GridLength (0.5, GridUnitType.Star)
