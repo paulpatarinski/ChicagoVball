@@ -84,6 +84,7 @@ namespace Core.Helpers.Controls
 		{
 			_mapHeight = COLLAPSED_MAP_HEIGHT;
 			_footerHeight = EXPANDED_FOOTER_HEIGHT;
+
 			ShowFooterDetails ();
 		}
 
@@ -411,12 +412,14 @@ namespace Core.Helpers.Controls
 
 		void ShowFooterDetails ()
 		{
+			var headerRowHeight = 0.26;
+
 			_footerMasterGrid.RowDefinitions.Add (
 				new RowDefinition {
-					Height = new GridLength (0.8, GridUnitType.Star)
+					Height = new GridLength (1 - headerRowHeight, GridUnitType.Star)
 				}
 			);
-			_footerMasterGrid.RowDefinitions [0].Height = new GridLength (0.2, GridUnitType.Star);
+			_footerMasterGrid.RowDefinitions [0].Height = new GridLength (headerRowHeight, GridUnitType.Star);
 
 			var footerDetails = CreateFooterDetails ();
 
