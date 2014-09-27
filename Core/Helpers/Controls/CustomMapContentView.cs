@@ -262,9 +262,11 @@ namespace Core.Helpers.Controls
 				}, RowSpacing = 10, Padding = new Thickness (0, 0, 0, 0)
 			};
 
+
 			footerDetailsGrid.Children.Add (CreateActionButtonsGrid (), 0, 0);
 			footerDetailsGrid.Children.Add (CreateScheduleGrid (), 0, 1);
 			footerDetailsGrid.Children.Add (CreateOtherView (), 0, 2);
+
 
 			return new ScrollView{ Content = footerDetailsGrid };
 		}
@@ -386,7 +388,7 @@ namespace Core.Helpers.Controls
 			listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
 				var url = e.SelectedItem as Url;
 				
-				if (url != null) {
+				if (url != null && url.Value.Contains ("www")) {
 					DependencyService.Get<IPhoneService> ().OpenBrowser (url.Value);
 				}
 

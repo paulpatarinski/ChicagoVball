@@ -12,8 +12,8 @@ namespace Core
 			Grid grid = new Grid {
 				Padding = new Thickness (5, 0, 5, 0),
 				ColumnDefinitions = {
-					new ColumnDefinition { Width = new GridLength (0.4, GridUnitType.Star) },
-					new ColumnDefinition { Width = new GridLength (0.6, GridUnitType.Star) },
+					new ColumnDefinition { Width = new GridLength (0.3, GridUnitType.Star) },
+					new ColumnDefinition { Width = new GridLength (0.7, GridUnitType.Star) },
 				},
 				RowDefinitions = {
 					new RowDefinition { Height = new GridLength (1, GridUnitType.Star) }
@@ -61,7 +61,7 @@ namespace Core
 
 		public string Detail {
 			get {
-				return (string)base.GetValue (DetailProperty);
+				return ((string)base.GetValue (DetailProperty)).TruncateString (25);
 			}
 			set {
 				base.SetValue (DetailProperty, value);

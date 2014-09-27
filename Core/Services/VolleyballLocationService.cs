@@ -32,7 +32,14 @@ namespace Core.Services
 						EndTime = new DateTime (2014, 9, 20, 16, 0, 0)
 					}
 				},
-				Others = new List<UrlModel>{ new UrlModel{ Key = "Website", Value = "https://www.google.com" } }
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.cpdbeaches.com/beaches/montrose-beach/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Sand"
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -44,13 +51,21 @@ namespace Core.Services
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					//Sunday
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 21, 9, 0, 0)
-							,
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 21, 9, 0, 0),
 						EndTime = new DateTime (2014, 9, 21, 13, 0, 0)
+					}
+				},				
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.cpdbeaches.com/beaches/north-avenue-beach/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Sand"
 					}
 				}
 			});
 
+			//TODO: add schedule
 			locations.Add (new VolleyballLocationModel {
 				Label = "Windy City Fieldhouse", 
 				Address = "2367 W Logan Blvd, Chicago, IL",
@@ -58,7 +73,14 @@ namespace Core.Services
 				Longitude = -87.686766,
 				PhoneNumber = "(773) 486-7300",
 				PinIcon = Icons.CrazyRobot,
-
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.windycityfieldhouse.com/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 
 
@@ -69,7 +91,25 @@ namespace Core.Services
 				Latitude = 42.038580,
 				Longitude = -87.944055,
 				PhoneNumber = "(847) 640-1000",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					//Monday
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 15, 19, 30, 0),
+						EndTime = new DateTime (2014, 9, 15, 23, 0, 0)
+					},
+					//Wednesday
+					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 17, 19, 30, 0),
+						EndTime = new DateTime (2014, 9, 17, 23, 0, 0)
+					}
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "https://www.mppd.org/facility/rec-plex"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Sand/Indoor"
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
