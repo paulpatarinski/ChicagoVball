@@ -170,6 +170,15 @@ namespace ChiVball.Android
 			SmsManager.Default.SendTextMessage (to, null, body, null, null);
 		}
 
+		public void ShareText (string text)
+		{
+			Intent sendIntent = new Intent ();
+			sendIntent.SetAction (Intent.ActionSend);
+			sendIntent.PutExtra (Intent.ExtraText, text);
+			sendIntent.SetType ("text/plain");
+			this.StartActivity (sendIntent);
+		}
+
 		#endregion
 	}
 }

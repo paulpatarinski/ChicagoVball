@@ -53,6 +53,8 @@ namespace Core
 		void DialNumber (string number);
 
 		void SendSMS (string to, string body);
+
+		void ShareText (string text);
 	}
 }
 

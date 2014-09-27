@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Core.Helpers.Controls;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Helpers.Controls
 {
@@ -252,6 +253,12 @@ namespace Core.Helpers.Controls
 				BackgroundColor = Color.White,
 				VerticalOptions = LayoutOptions.Center,
 				HorizontalOptions = LayoutOptions.Center
+			};
+
+			shareButton.Clicked += (sender, e) => {
+				var selectedPin = _customMap.SelectedPin;
+				var text = string.Format ("I am playing vball at {0}, {1}.", selectedPin.Label, selectedPin.Address);
+				DependencyService.Get<IPhoneService> ().ShareText (text);
 			};
 
 			var actionButtonsGrid = new Grid {
