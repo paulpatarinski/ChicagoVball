@@ -27,17 +27,17 @@ namespace Core.Helpers.Controls
 				}
 			};
 
-			_mapGrid.Children.Add (_customMap, 0, 0);
 			_mapGrid.Children.Add (CreateFooter (), 0, 1);
+			_mapGrid.Children.Add (_customMap, 0, 0);
 		
 			Grid.SetRowSpan (_customMap, 2);
 			_mapGrid.RowSpacing = 0;
 
 			//Bind the footer to the ShowFooter property
 			_mapGrid.BindingContext = this;
-			_mapGrid.Children [1].SetBinding<CustomMapContentView> (IsVisibleProperty, x => x.ShowFooter);
+			_mapGrid.Children [0].SetBinding<CustomMapContentView> (IsVisibleProperty, x => x.ShowFooter);
 
-			_mapGrid.Children [1].GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
+			_mapGrid.Children [0].GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
 				if (_footerHeight == COLLAPSED_FOOTER_HEIGHT) {
 					ExpandFooter ();
 				} else {
@@ -75,13 +75,14 @@ namespace Core.Helpers.Controls
 
 				if (value == false) {
 					ExpandMap ();
+				} else {
+					Grid.SetRowSpan (_customMap, 1);
 				}
 			}
 		}
 
 		void ExpandFooter ()
 		{
-			Grid.SetRowSpan (_customMap, 1);
 			_mapHeight = COLLAPSED_MAP_HEIGHT;
 			_footerHeight = EXPANDED_FOOTER_HEIGHT;
 			ShowFooterDetails ();
