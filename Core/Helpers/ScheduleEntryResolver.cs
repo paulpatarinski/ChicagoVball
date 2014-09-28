@@ -26,7 +26,7 @@ namespace Core
 
 		private string FormatHoursOfOperation (ScheduleEntryModel entryModel)
 		{
-			return entryModel.StartTime.ToString ("HH:mm") + " - " + entryModel.EndTime.ToString ("HH:mm");
+			return entryModel.StartTime.ToString ("h:mm tt") + " - " + entryModel.EndTime.ToString ("h:mm tt");
 		}
 	}
 }
