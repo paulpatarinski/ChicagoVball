@@ -145,6 +145,11 @@ namespace ChiVball.Android
 			}
 		}
 
+
+
+
+		#endregion
+
 		/// <summary>
 		/// Opens native dialog to dial the specified number.
 		/// </summary>
@@ -182,11 +187,22 @@ namespace ChiVball.Android
 		public void LaunchMap (string address)
 		{
 			var geoUri = Uri.Parse (string.Format ("geo:0,0?q={0}", address));
-			var mapIntent = new Intent (Intent.ActionView, geoUri);
-			this.StartActivity (mapIntent);
+
+			StartActivity (geoUri);
 		}
 
-		#endregion
+		public void LaunchNavigation (string address)
+		{
+			var uri = Uri.Parse ("google.navigation:q=" + address);
+
+			StartActivity (uri);		
+		}
+
+		private void StartActivity (Uri uri)
+		{
+			var intent = new Intent (Intent.ActionView, uri);
+			this.StartActivity (intent);
+		}
 	}
 }
 

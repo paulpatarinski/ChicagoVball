@@ -219,7 +219,7 @@ namespace Core.Helpers.Controls
 
 			grid.GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
 				var address = _customMap.SelectedPin.Address;
-				DependencyService.Get<IPhoneService> ().LaunchMap (address);
+				DependencyService.Get<IPhoneService> ().LaunchNavigation (address);
 			}));
 
 			navImageGrid.Children.Add (navImage, 1, 0);

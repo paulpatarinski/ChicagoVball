@@ -57,6 +57,8 @@ namespace Core
 		void ShareText (string text);
 
 		void LaunchMap (string address);
+
+		void LaunchNavigation (string address);
 	}
 }
 
