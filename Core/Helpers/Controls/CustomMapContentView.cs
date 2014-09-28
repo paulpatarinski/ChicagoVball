@@ -73,6 +73,7 @@ namespace Core.Helpers.Controls
 				base.SetValue (ShowFooterProperty, value);
 
 				if (value == false) {
+					ExpandMapFullScreen ();
 					ExpandMap ();
 				} else {
 					CollapseMap ();
