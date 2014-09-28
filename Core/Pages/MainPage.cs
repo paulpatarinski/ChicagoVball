@@ -19,12 +19,12 @@ namespace Core.Pages
 			BackgroundColor = Color.White;
 
 			//Coordinates for the starting point of the map
-			const double latitude = 41.951692;
-			const double longitude = -87.993720;
+			const double latitude = 41.975033;
+			const double longitude = -87.879058;
 
 			var location = new Position (latitude, longitude);
 
-			var map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (40))){ IsShowingUser = true };
+			var map = new CustomMap (MapSpan.FromCenterAndRadius (location, Distance.FromMiles (20))){ IsShowingUser = true };
 
 			map.BindingContext = _viewModel;
 			map.SetBinding<MainPageViewModel> (CustomMap.CustomPinsProperty, x => x.VolleyballLocations);
