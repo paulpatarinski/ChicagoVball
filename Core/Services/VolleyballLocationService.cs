@@ -30,10 +30,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Saturday).AddHours (16)
 					},
 				},
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.cpdbeaches.com/beaches/montrose-beach/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Sand"
 					}
@@ -53,10 +53,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (13)
 					},
 				},				
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.cpdbeaches.com/beaches/north-avenue-beach/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Sand"
 					}
@@ -71,10 +71,10 @@ namespace Core.Services
 				Longitude = -87.686766,
 				PhoneNumber = "(773) 486-7300",
 				PinIcon = Icons.CrazyRobot,
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.windycityfieldhouse.com/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}
@@ -100,10 +100,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (23)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "https://www.mppd.org/facility/rec-plex"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Sand/Indoor"
 					}
@@ -123,10 +123,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Thursday).AddHours (22)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.palatineparks.org/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}
@@ -146,10 +146,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (21).AddMinutes (30)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.hpparks.org/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}
@@ -169,10 +169,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (17)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.glenviewparks.org/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}
@@ -191,10 +191,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (20).AddMinutes (30)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.streamwoodparkdistrict.org/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}
@@ -213,10 +213,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (21).AddMinutes (30)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.poe.d21.k12.il.us/"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}
@@ -235,10 +235,10 @@ namespace Core.Services
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Friday).AddHours (21).AddMinutes (30)
 					},
 				},	
-				Others = new List<UrlModel> { new UrlModel {
+				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.parkfun.com/facilities/meineke-recreation-center"
-					}, new UrlModel {
+					}, new ExtraDetailModel {
 						Key = "Type",
 						Value = "Indoor"
 					}

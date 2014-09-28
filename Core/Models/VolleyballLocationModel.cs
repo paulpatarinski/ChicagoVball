@@ -23,6 +23,6 @@ namespace Core.Models
 		/// <value>The schedule entries.</value>
 		public IEnumerable<ScheduleEntryModel> ScheduleEntries { get; set; }
 
-		public IEnumerable<UrlModel> Others { get; set; }
+		public IEnumerable<ExtraDetailModel> Others { get; set; }
 	}
 }

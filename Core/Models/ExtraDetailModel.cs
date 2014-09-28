@@ -2,7 +2,7 @@
 
 namespace Core
 {
-	public class UrlModel
+	public class ExtraDetailModel
 	{
 		public string Key {
 			get;

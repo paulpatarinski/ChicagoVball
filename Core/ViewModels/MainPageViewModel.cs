@@ -33,12 +33,12 @@ namespace Core.ViewModels
 
 		public async Task LoadVolleyballLocationsAsync ()
 		{
-			Mapper.CreateMap<UrlModel, Url> ();
+			Mapper.CreateMap<ExtraDetailModel, Url> ();
 
 			Mapper.CreateMap<VolleyballLocationModel, CustomPin> ()
 		    .ForMember (dest => dest.Position, opt => opt.MapFrom (src => new Position (src.Latitude, src.Longitude)))
 		    .ForMember (dest => dest.PhoneNumber, opt => opt.MapFrom (src => src.PhoneNumber))
-		    .ForMember (dest => dest.Others, opt => opt.MapFrom (src => src.Others ?? new List<UrlModel> ()))
+		    .ForMember (dest => dest.Others, opt => opt.MapFrom (src => src.Others ?? new List<ExtraDetailModel> ()))
 		    .ForMember (dest => dest.ScheduleEntries,
 				opt =>
 		        opt.ResolveUsing<ScheduleEntryResolver> ()
