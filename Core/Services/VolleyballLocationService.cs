@@ -21,16 +21,14 @@ namespace Core.Services
 				PhoneNumber = "(312) 742-5121",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
-					//Tuesday
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 16, 16, 30, 0)
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Tuesday).AddHours (16).AddMinutes (30)
 						,
-						EndTime = new DateTime (2014, 9, 16, 21, 0, 0)
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Tuesday).AddHours (21)
 					},
-					//Saturday
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 20, 9, 0, 0)
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Saturday).AddHours (9)
 							,
-						EndTime = new DateTime (2014, 9, 20, 16, 0, 0)
-					}
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Saturday).AddHours (16)
+					},
 				},
 				Others = new List<UrlModel> { new UrlModel {
 						Key = "Website",
@@ -50,10 +48,10 @@ namespace Core.Services
 				PhoneNumber = "(312) 742-5121",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
-					//Sunday
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 21, 9, 0, 0),
-						EndTime = new DateTime (2014, 9, 21, 13, 0, 0)
-					}
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (9)
+							,
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (13)
+					},
 				},				
 				Others = new List<UrlModel> { new UrlModel {
 						Key = "Website",
@@ -93,14 +91,14 @@ namespace Core.Services
 				PhoneNumber = "(847) 640-1000",
 				PinIcon = Icons.CrazyRobot,
 				ScheduleEntries = new List<ScheduleEntryModel> {
-					//Monday
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 15, 19, 30, 0),
-						EndTime = new DateTime (2014, 9, 15, 23, 0, 0)
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (19).AddMinutes (30)
+							,
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (23)
 					},
-					//Wednesday
-					new ScheduleEntryModel { StartTime = new DateTime (2014, 9, 17, 19, 30, 0),
-						EndTime = new DateTime (2014, 9, 17, 23, 0, 0)
-					}
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (19).AddMinutes (30)
+							,
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (23)
+					},
 				},	
 				Others = new List<UrlModel> { new UrlModel {
 						Key = "Website",
@@ -118,7 +116,21 @@ namespace Core.Services
 				Latitude = 42.113547,
 				Longitude = -88.038834,
 				PhoneNumber = "(847) 991-0333",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Thursday).AddHours (19)
+							,
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Thursday).AddHours (22)
+					},
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.palatineparks.org/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -127,7 +139,21 @@ namespace Core.Services
 				Latitude = 41.993697,
 				Longitude = -88.152380,
 				PhoneNumber = "(630) 837-6300",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (19)
+							,
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (21).AddMinutes (30)
+					},
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.hpparks.org/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 
 
@@ -137,7 +163,20 @@ namespace Core.Services
 				Latitude = 42.088504,
 				Longitude = -87.816723,
 				PhoneNumber = "(847) 724-5670",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (14),
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (17)
+					},
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.glenviewparks.org/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -146,7 +185,20 @@ namespace Core.Services
 				Latitude = 42.020581,
 				Longitude = -88.170744,
 				PhoneNumber = "(630) 483-3010",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (18).AddMinutes (30),
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (20).AddMinutes (30)
+					},
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.streamwoodparkdistrict.org/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -155,7 +207,20 @@ namespace Core.Services
 				Latitude = 42.126878,
 				Longitude = -87.985978,
 				PhoneNumber = "(847) 670-3200",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (19),
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (21).AddMinutes (30)
+					},
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.poe.d21.k12.il.us/"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 
 			locations.Add (new VolleyballLocationModel {
@@ -164,7 +229,20 @@ namespace Core.Services
 				Latitude = 42.017050,
 				Longitude = -88.073599,
 				PhoneNumber = "(847) 985-2133",
-				PinIcon = Icons.CrazyRobot
+				PinIcon = Icons.CrazyRobot,
+				ScheduleEntries = new List<ScheduleEntryModel> {
+					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Friday).AddHours (19),
+						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Friday).AddHours (21).AddMinutes (30)
+					},
+				},	
+				Others = new List<UrlModel> { new UrlModel {
+						Key = "Website",
+						Value = "http://www.parkfun.com/facilities/meineke-recreation-center"
+					}, new UrlModel {
+						Key = "Type",
+						Value = "Indoor"
+					}
+				}
 			});
 		
 			return locations;
