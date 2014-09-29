@@ -106,7 +106,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\CrazyRobot.png" />
+    <AndroidAsset Include="Assets\BeachVball.png" />
+    <AndroidAsset Include="Assets\IndoorVball.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">

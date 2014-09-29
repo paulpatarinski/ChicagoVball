@@ -4,6 +4,8 @@ namespace Core
 {
 	public static class Icons
 	{
-		public static string CrazyRobot { get { return "CrazyRobot"; } }
+		public static string BeachVball { get { return "BeachVball"; } }
+
+		public static string IndoorVball { get { return "IndoorVball"; } }
 	}
 }

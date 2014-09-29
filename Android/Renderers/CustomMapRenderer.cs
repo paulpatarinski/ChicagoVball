@@ -65,6 +65,11 @@ namespace Android
 			set;
 		}
 
+		CustomPin _previouslySelectedPin {
+			get;
+			set;
+		}
+
 		void HandleMapClick (object sender, GoogleMap.MapClickEventArgs e)
 		{
 			_customMapContentView.ShowFooter = false;
@@ -76,7 +81,7 @@ namespace Android
 		{
 			//todo : This should reset to the default icon for the pin (right now the icon is hard coded)
 			if (_previouslySelectedMarker != null) {
-				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", Icons.CrazyRobot))); 
+				_previouslySelectedMarker.SetIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", _previouslySelectedPin.PinIcon))); 
 				_previouslySelectedMarker = null;
 			}
 		}
@@ -92,6 +97,7 @@ namespace Android
 			_customMap.SelectedPinAddress = currentMarker.Snippet;
 			_customMapContentView.ShowFooter = true;
 
+			_previouslySelectedPin = _customMap.SelectedPin;
 			_previouslySelectedMarker = currentMarker;
 		}
 	}

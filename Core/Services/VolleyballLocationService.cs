@@ -19,7 +19,7 @@ namespace Core.Services
 				Latitude = 41.965097,
 				Longitude = -87.634818,
 				PhoneNumber = "(312) 742-5121",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.BeachVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Tuesday).AddHours (16).AddMinutes (30)
 						,
@@ -46,7 +46,7 @@ namespace Core.Services
 				Latitude = 41.913559,
 				Longitude = -87.622498,
 				PhoneNumber = "(312) 742-5121",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.BeachVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (9)
 							,
@@ -70,7 +70,7 @@ namespace Core.Services
 				Latitude = 41.928497,
 				Longitude = -87.686766,
 				PhoneNumber = "(773) 486-7300",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				Others = new List<ExtraDetailModel> { new ExtraDetailModel {
 						Key = "Website",
 						Value = "http://www.windycityfieldhouse.com/"
@@ -89,7 +89,7 @@ namespace Core.Services
 				Latitude = 42.038580,
 				Longitude = -87.944055,
 				PhoneNumber = "(847) 640-1000",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (19).AddMinutes (30)
 							,
@@ -116,7 +116,7 @@ namespace Core.Services
 				Latitude = 42.113547,
 				Longitude = -88.038834,
 				PhoneNumber = "(847) 991-0333",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Thursday).AddHours (19)
 							,
@@ -139,7 +139,7 @@ namespace Core.Services
 				Latitude = 41.993697,
 				Longitude = -88.152380,
 				PhoneNumber = "(630) 837-6300",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Wednesday).AddHours (19)
 							,
@@ -163,7 +163,7 @@ namespace Core.Services
 				Latitude = 42.088504,
 				Longitude = -87.816723,
 				PhoneNumber = "(847) 724-5670",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (14),
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Sunday).AddHours (17)
@@ -185,7 +185,7 @@ namespace Core.Services
 				Latitude = 42.020581,
 				Longitude = -88.170744,
 				PhoneNumber = "(630) 483-3010",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (18).AddMinutes (30),
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (20).AddMinutes (30)
@@ -207,7 +207,7 @@ namespace Core.Services
 				Latitude = 42.126878,
 				Longitude = -87.985978,
 				PhoneNumber = "(847) 670-3200",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (19),
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Monday).AddHours (21).AddMinutes (30)
@@ -229,7 +229,7 @@ namespace Core.Services
 				Latitude = 42.017050,
 				Longitude = -88.073599,
 				PhoneNumber = "(847) 985-2133",
-				PinIcon = Icons.CrazyRobot,
+				PinIcon = Icons.IndoorVball,
 				ScheduleEntries = new List<ScheduleEntryModel> {
 					new ScheduleEntryModel { StartTime = new DateTime ().FromWeekDay (DayOfWeek.Friday).AddHours (19),
 						EndTime = new DateTime ().FromWeekDay (DayOfWeek.Friday).AddHours (21).AddMinutes (30)
