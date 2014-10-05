@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using Core.Models;
 
 namespace Core
 {
@@ -58,7 +61,7 @@ namespace Core
 
 		void LaunchMap (string address);
 
-		void LaunchNavigation (string address);
+		Task LaunchNavigationAsync (NavigationModel navigationModel);
 	}
 }
 

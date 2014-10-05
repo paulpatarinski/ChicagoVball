@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Models\NavigationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pages\MainPage.cs" />
     <Compile Include="Helpers\Controls\CustomMap.cs" />
@@ -75,8 +76,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\Enums\" />
-    <Folder Include="Helpers\Services\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

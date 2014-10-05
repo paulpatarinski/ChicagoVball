@@ -4,8 +4,10 @@ using Android.App;
 using Android.Net;
 using Xamarin.Forms;
 using Core;
+using Core.Models;
 using ChiVball.Android;
 using Android.Net;
+using System.Threading.Tasks;
 
 [assembly: Dependency (typeof(PhoneService))]
 namespace ChiVball.Android
@@ -191,9 +193,9 @@ namespace ChiVball.Android
 			StartActivity (geoUri);
 		}
 
-		public void LaunchNavigation (string address)
+		public async Task LaunchNavigationAsync (NavigationModel navigationModel)
 		{
-			var uri = Uri.Parse ("google.navigation:q=" + address);
+			var uri = Uri.Parse ("google.navigation:q=" + navigationModel.DestinationAddress);
 
 			StartActivity (uri);		
 		}

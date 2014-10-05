@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Models;
 using Xamarin.Forms;
 using Core.Helpers.Controls;
 using System.Collections.Generic;
@@ -231,8 +232,8 @@ namespace Core.Helpers.Controls
 			};
 
 			grid.GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
-				var address = _customMap.SelectedPin.Address;
-				DependencyService.Get<IPhoneService> ().LaunchNavigation (address);
+				var selectedPin = _customMap.SelectedPin;
+				DependencyService.Get<IPhoneService> ().LaunchNavigationAsync (new NavigationModel{Latitude = selectedPin.Position.Latitude, Longitude = selectedPin.Position.Longitude, DestinationAddress = selectedPin.Address, DestinationName = selectedPin.Label});
 			}));
 
 			navImageGrid.Children.Add (navImage, 1, 0);
