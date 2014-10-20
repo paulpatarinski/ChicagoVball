@@ -1,420 +1,150 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Core.Models;
 using Xamarin.Forms;
-using Core.Helpers.Controls;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Core.Helpers.Controls
 {
-	public class CustomMapContentView : ContentView
-	{
-		public CustomMapContentView (CustomMap customMap)
-		{
-			_customMap = customMap;
+  public class CustomMapContentView : ContentView
+  {
+    public CustomMapContentView(CustomMap customMap)
+    {
+      _customMap = customMap;
 
-			_mapGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (EXPANDED_MAP_HEIGHT, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (COLLAPSED_FOOTER_HEIGHT, GridUnitType.Star)
-					},
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (1, GridUnitType.Star)
-					}
-				}
-			};
+      _mapGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection
+        {
+          new RowDefinition
+          {
+            Height = new GridLength(EXPANDED_MAP_HEIGHT, GridUnitType.Star)
+          },
+          new RowDefinition
+          {
+            Height = new GridLength(COLLAPSED_FOOTER_HEIGHT, GridUnitType.Star)
+          },
+        },
+        ColumnDefinitions = new ColumnDefinitionCollection
+        {
+          new ColumnDefinition
+          {
+            Width = new GridLength(1, GridUnitType.Star)
+          }
+        }
+      };
 
-			_mapGrid.Children.Add (CreateFooter (), 0, 1);
-			_mapGrid.Children.Add (_customMap, 0, 0);
-		
-			ExpandMapFullScreen ();
-			_mapGrid.RowSpacing = 0;
+      _mapGrid.Children.Add(_customMap, 0, 0);
+      _mapGrid.Children.Add(CreateFooter(), 0, 1);
 
-			//Bind the footer to the ShowFooter property
-			_mapGrid.BindingContext = this;
-			_mapGrid.Children [0].SetBinding<CustomMapContentView> (IsVisibleProperty, x => x.ShowFooter);
+      Grid.SetRowSpan(_customMap, 2);
 
-			_mapGrid.Children [0].GestureRecognizers.Add (new TapGestureRecognizer ((view, obj) => {
-				if (_footerHeight == COLLAPSED_FOOTER_HEIGHT) {
-					ExpandFooter ();
-				} else {
-					ExpandMap ();
-				}
-			}));
+      _mapGrid.RowSpacing = 0;
 
+      //Bind the footer to the ShowFooter property
+      _mapGrid.BindingContext = this;
 
-			Content = _mapGrid;
-		}
+      
+      _mapGrid.Children[1].GestureRecognizers.Add(new TapGestureRecognizer((view, obj) => ToogleFooter()));
 
-		static double COLLAPSED_FOOTER_HEIGHT = 0.14;
-		static double COLLAPSED_MAP_HEIGHT = 0.37;
-		static double EXPANDED_MAP_HEIGHT = 0.86;
-		static double EXPANDED_FOOTER_HEIGHT = 0.63;
+      Content = _mapGrid;
+    }
 
-		double _footerHeight { get { return _mapGrid.RowDefinitions [1].Height.Value; } set { _mapGrid.RowDefinitions [1].Height = new GridLength (value, GridUnitType.Star); } }
+    private const uint COLLAPSE_ANIMATION_SPEED = 400;
+    private const uint EXPAND_ANIMATION_SPEED = 400;
+    private static double COLLAPSED_FOOTER_HEIGHT = 0.14;
+    private static double COLLAPSED_MAP_HEIGHT = 0.37;
+    private static double EXPANDED_MAP_HEIGHT = 0.86;
+    private static double EXPANDED_FOOTER_HEIGHT = 0.63;
+    private double _footerCollapsedHeight;
+    private double _footerCollapsedY;
+    private double _footerExpandedHeight;
+    private double _footerExpandedY;
+    private double _pageHeight;
+    private Grid _footerMasterGrid;
+    private Grid _mapGrid;
+    private CustomMap _customMap;
+    private FooterMode _footerMode;
 
-		double _mapHeight { get { return _mapGrid.RowDefinitions [0].Height.Value; } set { _mapGrid.RowDefinitions [0].Height = new GridLength (value, GridUnitType.Star); } }
+    public FooterMode FooterMode
+    {
+      get { return _footerMode; }
+      set
+      {
+        _footerMode = value;
 
-		Grid _footerMasterGrid;
+        switch (value)
+        {
+          case FooterMode.Expanded:
+            ExpandFooter();
+            break;
+          case FooterMode.Minimized:
+            MinimizeFooter();
+            break;
+          default:
+            HideFooter();
+            break;
+        }
+      }
+    }
 
-		Grid _mapGrid;
+    protected override void OnSizeAllocated(double width, double height)
+    {
+      //If the pageSize values have not been set yet, set them
+      if (Math.Abs(_pageHeight) < 0.001)
+      {
+        _pageHeight = Bounds.Height;
 
-		CustomMap _customMap;
+        _footerCollapsedHeight = _pageHeight * COLLAPSED_FOOTER_HEIGHT;
+        _footerCollapsedY = _pageHeight * EXPANDED_MAP_HEIGHT;
 
-		public static readonly BindableProperty ShowFooterProperty = BindableProperty.Create<CustomMapContentView, bool> (x => x.ShowFooter, false);
+        _footerExpandedHeight = _pageHeight * EXPANDED_FOOTER_HEIGHT;
+        _footerExpandedY = _pageHeight - _footerExpandedHeight;
 
-		public bool ShowFooter {
-			get{ return (bool)base.GetValue (ShowFooterProperty); }
-			set {
-				base.SetValue (ShowFooterProperty, value);
+        FooterMode = FooterMode.Hidden;
+      }
 
-				if (value == false) {
-					ExpandMapFullScreen ();
-					ExpandMap ();
-				} else {
-					CollapseMap ();
-				}
-			}
-		}
+      base.OnSizeAllocated(width, height);
+    }
 
-		void ExpandMapFullScreen ()
-		{
-			Grid.SetRowSpan (_customMap, 2);
-		}
+    private void ToogleFooter()
+    {
+      FooterMode = FooterMode == FooterMode.Expanded ? FooterMode.Minimized : FooterMode.Expanded;
+    }
 
-		/// <summary>
-		/// Makes the map only occupy 1 row
-		/// </summary>
-		void CollapseMap ()
-		{
-			Grid.SetRowSpan (_customMap, 1);
-		}
+    void HideFooter()
+    {
+      var footerOldBounds = _mapGrid.Children[1].Bounds;
+      var footerNewBounds = new Rectangle(footerOldBounds.X, _pageHeight, footerOldBounds.Width, 0);
+
+      _mapGrid.Children[1].LayoutTo(footerNewBounds, EXPAND_ANIMATION_SPEED, Easing.SinIn);
+
+      Task.Delay(TimeSpan.FromMilliseconds(COLLAPSE_ANIMATION_SPEED)).ContinueWith((result) => Device.BeginInvokeOnMainThread(HideFooterDetails));
+    }
 
 		void ExpandFooter ()
 		{
-			_mapHeight = COLLAPSED_MAP_HEIGHT;
-			_footerHeight = EXPANDED_FOOTER_HEIGHT;
+		  var footerOldBounds = _mapGrid.Children[1].Bounds;
+      var footerNewBounds = new Rectangle(footerOldBounds.X, _footerExpandedY, footerOldBounds.Width, _footerExpandedHeight);
 
-			ShowFooterDetails ();
+      Task.Delay(TimeSpan.FromMilliseconds(110)).ContinueWith((result) => Device.BeginInvokeOnMainThread(ShowFooterDetails));
+
+      _mapGrid.Children[1].LayoutTo(footerNewBounds, EXPAND_ANIMATION_SPEED, Easing.SinIn);
+
+		  _customMap.CameraFocusYOffset = 500;
+		  _customMap.CenterOnPosition = _customMap.SelectedPin.Position;
 		}
 
-		void ExpandMap ()
+		void MinimizeFooter ()
 		{
-			_mapHeight = EXPANDED_MAP_HEIGHT;
-			_footerHeight = COLLAPSED_FOOTER_HEIGHT;
-			HideFooterDetails ();
-		}
+      var footerOldBounds = _mapGrid.Children[1].Bounds;
+      var footerNewBounds = new Rectangle(footerOldBounds.X, _footerCollapsedY, footerOldBounds.Width, _footerCollapsedHeight);
 
-		ContentView CreateFooter ()
-		{
-			_footerMasterGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (1, GridUnitType.Star)
-					},
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (0.05, GridUnitType.Star)
-					}, new ColumnDefinition {
-						Width = new GridLength (0.95, GridUnitType.Star)
-					},
-				}, RowSpacing = 10
-			};
+      _mapGrid.Children[1].LayoutTo(footerNewBounds, COLLAPSE_ANIMATION_SPEED, Easing.SinIn);
 
-			var footerGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (1, GridUnitType.Star)
-					}
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (0.75, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.25, GridUnitType.Star)
-					},
-				}, BackgroundColor = Color.White
-			};
+      _customMap.CameraFocusYOffset = 100;
+      _customMap.CenterOnPosition = _customMap.SelectedPin.Position;
 
-
-			var placeNameLabel = new Label {
-				Text = "Pin Label Shows Here",
-				TextColor = Color.Black,
-			};
-
-			Device.OnPlatform (iOS: () => placeNameLabel.Font = Font.SystemFontOfSize (20),
-				Android: () => placeNameLabel.Font = Font.SystemFontOfSize (20),
-				WinPhone: () => placeNameLabel.Font = Font.SystemFontOfSize (24));
-
-			placeNameLabel.BindingContext = _customMap;
-			placeNameLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Label);
-
-			var addressLabel = new Label {
-				Text = "Address Shows Here",
-				TextColor = Color.Gray,
-			};
-
-			Device.OnPlatform (iOS: () => addressLabel.Font = Font.SystemFontOfSize (14),
-				Android: () => addressLabel.Font = Font.SystemFontOfSize (14),
-				WinPhone: () => addressLabel.Font = Font.SystemFontOfSize (18));
-
-			addressLabel.BindingContext = _customMap;
-			addressLabel.SetBinding<CustomMap> (Label.TextProperty, vm => vm.SelectedPin.Address);
-
-
-			var pinInfoStackLayout = new StackLayout { };
-
-			pinInfoStackLayout.Children.Add (placeNameLabel);
-			pinInfoStackLayout.Children.Add (addressLabel);
-			pinInfoStackLayout.Spacing = 0;
-
-			footerGrid.Children.Add (pinInfoStackLayout, 0, 0);
-			footerGrid.Children.Add (CreateImageButton ("navigate_icon.png", "Route", (view, o) => {
-				var selectedPin = _customMap.SelectedPin;
-				DependencyService.Get<IPhoneService> ().LaunchNavigationAsync (new NavigationModel {
-					Latitude = selectedPin.Position.Latitude,
-					Longitude = selectedPin.Position.Longitude,
-					DestinationAddress = selectedPin.Address,
-					DestinationName = selectedPin.Label
-				});
-			}), 1, 0);
-
-			_footerMasterGrid.Children.Add (footerGrid, 1, 0);
-
-			return new ContentView{ Content = _footerMasterGrid, BackgroundColor = Color.White, Opacity = 0.9 };
-		}
-
-		ScrollView CreateFooterDetails (double footerDetailsHeight)
-		{
-			var footerDetailsGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (COLLAPSED_FOOTER_HEIGHT, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.14, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.3, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.3, GridUnitType.Star)
-					},
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (0.95, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.05, GridUnitType.Star)
-					},
-				}, RowSpacing = 0, Padding = new Thickness (0, 10, 0, 0)
-			};
-
-			footerDetailsGrid.Children.Add (CreateActionButtonsGrid (), 0, 0);
-			footerDetailsGrid.Children.Add (CreateScheduleGrid (), 0, 1);
-			footerDetailsGrid.Children.Add (CreateOtherView (), 0, 2);
-
-			return new ScrollView {
-				Content = new ContentView {
-					Content = footerDetailsGrid,
-					HeightRequest = footerDetailsHeight
-				},
-			};
-		}
-
-		Grid CreateActionButtonsGrid ()
-		{
-			var actionButtonsGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (1, GridUnitType.Star)
-					}
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (0.2, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.25, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.1, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.25, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.2, GridUnitType.Star)
-					},
-				}, BackgroundColor = Color.White
-			};
-
-			var callImageButton = CreateImageButton ("call_icon.png", "Call", (view, o) => {
-				var phoneNumber = _customMap.SelectedPin.PhoneNumber;
-				DependencyService.Get<IPhoneService> ().DialNumber (phoneNumber);
-			});
-
-			var shareImageButton = CreateImageButton ("share_icon.png", "Share", (view, o) => {
-				var selectedPin = _customMap.SelectedPin;
-				var text = string.Format ("I am playing vball at {0}, {1}.", selectedPin.Label, selectedPin.Address);
-				DependencyService.Get<IPhoneService> ().ShareText (text);
-			});
-
-			actionButtonsGrid.Children.Add (callImageButton, 1, 0);
-			actionButtonsGrid.Children.Add (shareImageButton, 3, 0);
-
-			return actionButtonsGrid;
-		}
-
-		Grid CreateScheduleGrid ()
-		{
-			var scheduleGrid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (1, GridUnitType.Star)
-					}
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (1, GridUnitType.Star)
-					},
-						
-
-				}, BackgroundColor = Color.White
-			};
-
-			var listview = new ListView { };
-		
-			//Don't allow selection
-			listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
-				listview.SelectedItem = null;
-			};
-
-			var itemTemplate = new DataTemplate (typeof(HorizontalCell));
-
-			itemTemplate.SetBinding (HorizontalCell.TextProperty, "Day");
-			itemTemplate.SetValue (HorizontalCell.TextColorProperty, Color.Black);
-			itemTemplate.SetBinding (HorizontalCell.DetailProperty, "HoursOfOperation");
-			itemTemplate.SetValue (HorizontalCell.DetailColorProperty, Color.Gray);
-
-			listview.ItemTemplate = itemTemplate;
-			listview.BindingContext = _customMap;
-			listview.SetBinding<CustomMap> (ListView.ItemsSourceProperty, vm => vm.SelectedPin.ScheduleEntries);
-
-
-			scheduleGrid.Children.Add (listview, 0, 0);
-
-			return scheduleGrid;
-		}
-
-		View CreateOtherView ()
-		{
-			var contentView = new ContentView { BackgroundColor = Color.White };
-
-		
-			var listview = new ListView { };
-
-			//Don't allow selection
-			listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
-				var url = e.SelectedItem as Url;
-				
-				if (url != null && url.Value.Contains ("www")) {
-					DependencyService.Get<IPhoneService> ().OpenBrowser (url.Value);
-				}
-
-				listview.SelectedItem = null;
-			};
-
-			var itemTemplate = new DataTemplate (typeof(HorizontalCell));
-
-			itemTemplate.SetBinding (HorizontalCell.TextProperty, "Key");
-			itemTemplate.SetValue (HorizontalCell.TextColorProperty, Color.Black);
-			itemTemplate.SetBinding (HorizontalCell.DetailProperty, "Value");
-			itemTemplate.SetValue (HorizontalCell.DetailColorProperty, Color.Gray);
-
-			listview.ItemTemplate = itemTemplate;
-			listview.BindingContext = _customMap;
-			listview.SetBinding<CustomMap> (ListView.ItemsSourceProperty, vm => vm.SelectedPin.Others);
-
-
-			contentView.Content = listview;
-
-			return contentView;
-		}
-
-		ContentView CreateImageButton (string buttonImage, string buttonText, Action<View,Object> tappedCallback)
-		{
-			var grid = new Grid {
-				RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (0.12, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.38, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.4, GridUnitType.Star)
-					},
-					new RowDefinition {
-						Height = new GridLength (0.1, GridUnitType.Star)
-					},
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (1, GridUnitType.Star)
-					},
-
-				}, BackgroundColor = Color.White, HorizontalOptions = LayoutOptions.Center, RowSpacing = 0
-			};
-
-			var navImageGrid = new Grid {RowDefinitions = new RowDefinitionCollection {
-					new RowDefinition {
-						Height = new GridLength (1, GridUnitType.Star)
-					}
-				},
-				ColumnDefinitions = new ColumnDefinitionCollection {
-					new ColumnDefinition {
-						Width = new GridLength (0.28, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.44, GridUnitType.Star)
-					},
-					new ColumnDefinition {
-						Width = new GridLength (0.28, GridUnitType.Star)
-					},
-
-				}
-			};
-
-			var navImage = new Image () {			
-				Source = ImageSource.FromFile (buttonImage),
-				Aspect = Aspect.Fill,
-				HorizontalOptions = LayoutOptions.Center
-			};
-
-			grid.GestureRecognizers.Add (new TapGestureRecognizer (tappedCallback));
-		
-			navImageGrid.Children.Add (navImage, 1, 0);
-
-			var label = new Label {
-				Text = buttonText,
-				Font = Font.SystemFontOfSize (16),
-				TextColor = Colors.DarkBlue,
-				HorizontalOptions = LayoutOptions.Center
-			};
-
-			grid.Children.Add (navImageGrid, 0, 1);
-			grid.Children.Add (label, 0, 2);
-
-			return new ContentView { Content = grid };
+      Task.Delay(TimeSpan.FromMilliseconds(COLLAPSE_ANIMATION_SPEED)).ContinueWith((result) => Device.BeginInvokeOnMainThread(HideFooterDetails));
 		}
 
 		void ShowFooterDetails ()
@@ -436,10 +166,359 @@ namespace Core.Helpers.Controls
 		void HideFooterDetails ()
 		{
 			if (_footerMasterGrid.RowDefinitions.Count == 2) {
-				_footerMasterGrid.Children.RemoveAt (1);
+        _footerMasterGrid.Children.RemoveAt(1);
 				_footerMasterGrid.RowDefinitions.RemoveAt (1);
 				_footerMasterGrid.RowDefinitions [0].Height = new GridLength (1, GridUnitType.Star);
 			}
 		}
+
+    #region UI Creation
+
+    ContentView CreateFooter()
+    {
+      _footerMasterGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					},
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.05, GridUnitType.Star)
+					}, new ColumnDefinition {
+						Width = new GridLength (0.95, GridUnitType.Star)
+					},
+				},
+        RowSpacing = 10
+      };
+
+      var footerGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.75, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.25, GridUnitType.Star)
+					},
+				},
+        BackgroundColor = Color.White
+      };
+
+
+      var placeNameLabel = new Label
+      {
+        Text = "Pin Label Shows Here",
+        TextColor = Color.Black,
+      };
+
+      Device.OnPlatform(iOS: () => placeNameLabel.Font = Font.SystemFontOfSize(20),
+        Android: () => placeNameLabel.Font = Font.SystemFontOfSize(20),
+        WinPhone: () => placeNameLabel.Font = Font.SystemFontOfSize(24));
+
+      placeNameLabel.BindingContext = _customMap;
+      placeNameLabel.SetBinding<CustomMap>(Label.TextProperty, vm => vm.SelectedPin.Label);
+
+      var addressLabel = new Label
+      {
+        Text = "Address Shows Here",
+        TextColor = Color.Gray,
+      };
+
+      Device.OnPlatform(iOS: () => addressLabel.Font = Font.SystemFontOfSize(14),
+        Android: () => addressLabel.Font = Font.SystemFontOfSize(14),
+        WinPhone: () => addressLabel.Font = Font.SystemFontOfSize(18));
+
+      addressLabel.BindingContext = _customMap;
+      addressLabel.SetBinding<CustomMap>(Label.TextProperty, vm => vm.SelectedPin.Address);
+
+
+      var pinInfoStackLayout = new StackLayout { };
+
+      pinInfoStackLayout.Children.Add(placeNameLabel);
+      pinInfoStackLayout.Children.Add(addressLabel);
+      pinInfoStackLayout.Spacing = 0;
+
+      footerGrid.Children.Add(pinInfoStackLayout, 0, 0);
+      footerGrid.Children.Add(CreateImageButton("navigate_icon.png", "Route", (view, o) =>
+      {
+        var selectedPin = _customMap.SelectedPin;
+        DependencyService.Get<IPhoneService>().LaunchNavigationAsync(new NavigationModel
+        {
+          Latitude = selectedPin.Position.Latitude,
+          Longitude = selectedPin.Position.Longitude,
+          DestinationAddress = selectedPin.Address,
+          DestinationName = selectedPin.Label
+        });
+      }), 1, 0);
+
+      _footerMasterGrid.Children.Add(footerGrid, 1, 0);
+
+      return new ContentView { Content = _footerMasterGrid, BackgroundColor = Color.White, Opacity = 0.9 };
+    }
+
+    ScrollView CreateFooterDetails(double footerDetailsHeight)
+    {
+      var footerDetailsGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (COLLAPSED_FOOTER_HEIGHT, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.14, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.3, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.3, GridUnitType.Star)
+					},
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.95, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.05, GridUnitType.Star)
+					},
+				},
+        RowSpacing = 0,
+        Padding = new Thickness(0, 10, 0, 0)
+      };
+
+      footerDetailsGrid.Children.Add(CreateActionButtonsGrid(), 0, 0);
+      footerDetailsGrid.Children.Add(CreateScheduleGrid(), 0, 1);
+      footerDetailsGrid.Children.Add(CreateOtherView(), 0, 2);
+
+      return new ScrollView
+      {
+        Content = new ContentView
+        {
+          Content = footerDetailsGrid,
+          HeightRequest = footerDetailsHeight
+        },
+      };
+    }
+
+    Grid CreateActionButtonsGrid()
+    {
+      var actionButtonsGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.2, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.25, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.1, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.25, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.2, GridUnitType.Star)
+					},
+				},
+        BackgroundColor = Color.White
+      };
+
+      var callImageButton = CreateImageButton("call_icon.png", "Call", (view, o) =>
+      {
+        var phoneNumber = _customMap.SelectedPin.PhoneNumber;
+        DependencyService.Get<IPhoneService>().DialNumber(phoneNumber);
+      });
+
+      var shareImageButton = CreateImageButton("share_icon.png", "Share", (view, o) =>
+      {
+        var selectedPin = _customMap.SelectedPin;
+        var text = string.Format("I am playing vball at {0}, {1}.", selectedPin.Label, selectedPin.Address);
+        DependencyService.Get<IPhoneService>().ShareText(text);
+      });
+
+      actionButtonsGrid.Children.Add(callImageButton, 1, 0);
+      actionButtonsGrid.Children.Add(shareImageButton, 3, 0);
+
+      return actionButtonsGrid;
+    }
+
+    Grid CreateScheduleGrid()
+    {
+      var scheduleGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (1, GridUnitType.Star)
+					},
+						
+
+				},
+        BackgroundColor = Color.White
+      };
+
+      var listview = new ListView { };
+
+      //Don't allow selection
+      listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) =>
+      {
+        listview.SelectedItem = null;
+      };
+
+      var itemTemplate = new DataTemplate(typeof(HorizontalCell));
+
+      itemTemplate.SetBinding(HorizontalCell.TextProperty, "Day");
+      itemTemplate.SetValue(HorizontalCell.TextColorProperty, Color.Black);
+      itemTemplate.SetBinding(HorizontalCell.DetailProperty, "HoursOfOperation");
+      itemTemplate.SetValue(HorizontalCell.DetailColorProperty, Color.Gray);
+
+      listview.ItemTemplate = itemTemplate;
+      listview.BindingContext = _customMap;
+      listview.SetBinding<CustomMap>(ListView.ItemsSourceProperty, vm => vm.SelectedPin.ScheduleEntries);
+
+
+      scheduleGrid.Children.Add(listview, 0, 0);
+
+      return scheduleGrid;
+    }
+
+    View CreateOtherView()
+    {
+      var contentView = new ContentView { BackgroundColor = Color.White };
+
+
+      var listview = new ListView { };
+
+      //Don't allow selection
+      listview.ItemSelected += (object sender, SelectedItemChangedEventArgs e) =>
+      {
+        var url = e.SelectedItem as Url;
+
+        if (url != null && url.Value.Contains("www"))
+        {
+          DependencyService.Get<IPhoneService>().OpenBrowser(url.Value);
+        }
+
+        listview.SelectedItem = null;
+      };
+
+      var itemTemplate = new DataTemplate(typeof(HorizontalCell));
+
+      itemTemplate.SetBinding(HorizontalCell.TextProperty, "Key");
+      itemTemplate.SetValue(HorizontalCell.TextColorProperty, Color.Black);
+      itemTemplate.SetBinding(HorizontalCell.DetailProperty, "Value");
+      itemTemplate.SetValue(HorizontalCell.DetailColorProperty, Color.Gray);
+
+      listview.ItemTemplate = itemTemplate;
+      listview.BindingContext = _customMap;
+      listview.SetBinding<CustomMap>(ListView.ItemsSourceProperty, vm => vm.SelectedPin.Others);
+
+
+      contentView.Content = listview;
+
+      return contentView;
+    }
+
+    ContentView CreateImageButton(string buttonImage, string buttonText, Action<View, Object> tappedCallback)
+    {
+      var grid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (0.12, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.38, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.4, GridUnitType.Star)
+					},
+					new RowDefinition {
+						Height = new GridLength (0.1, GridUnitType.Star)
+					},
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (1, GridUnitType.Star)
+					},
+
+				},
+        BackgroundColor = Color.White,
+        HorizontalOptions = LayoutOptions.Center,
+        RowSpacing = 0
+      };
+
+      var navImageGrid = new Grid
+      {
+        RowDefinitions = new RowDefinitionCollection {
+					new RowDefinition {
+						Height = new GridLength (1, GridUnitType.Star)
+					}
+				},
+        ColumnDefinitions = new ColumnDefinitionCollection {
+					new ColumnDefinition {
+						Width = new GridLength (0.28, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.44, GridUnitType.Star)
+					},
+					new ColumnDefinition {
+						Width = new GridLength (0.28, GridUnitType.Star)
+					},
+
+				}
+      };
+
+      var navImage = new Image()
+      {
+        Source = ImageSource.FromFile(buttonImage),
+        Aspect = Aspect.Fill,
+        HorizontalOptions = LayoutOptions.Center
+      };
+
+      grid.GestureRecognizers.Add(new TapGestureRecognizer(tappedCallback));
+
+      navImageGrid.Children.Add(navImage, 1, 0);
+
+      var label = new Label
+      {
+        Text = buttonText,
+        Font = Font.SystemFontOfSize(16),
+        TextColor = Colors.DarkBlue,
+        HorizontalOptions = LayoutOptions.Center
+      };
+
+      grid.Children.Add(navImageGrid, 0, 1);
+      grid.Children.Add(label, 0, 2);
+
+      return new ContentView { Content = grid };
+    }
+
+    #endregion UI Creation
+
 	}
+
+  public enum FooterMode
+  {
+    Expanded,
+    Minimized,
+    Hidden
+  }
 }

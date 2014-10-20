@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
-using Core.Pages;
 using System.Linq;
 
 namespace Core.Helpers.Controls
@@ -13,7 +12,18 @@ namespace Core.Helpers.Controls
 
 		}
 
-		public static readonly BindableProperty SelectedPinAddressProperty = BindableProperty.Create<CustomMap, string> (x => x.SelectedPinAddress, string.Empty);
+
+    public Position CenterOnPosition
+    {
+      get { return _centerOnPosition; }
+      set
+      {
+        _centerOnPosition = value;
+        OnPropertyChanged();
+      }
+    }
+
+	  public static readonly BindableProperty SelectedPinAddressProperty = BindableProperty.Create<CustomMap, string> (x => x.SelectedPinAddress, string.Empty);
 
 		public string SelectedPinAddress {
 			get{ return (string)base.GetValue (SelectedPinAddressProperty); }
@@ -31,10 +41,13 @@ namespace Core.Helpers.Controls
 		}
 
 		public static readonly BindableProperty CustomPinsProperty = BindableProperty.Create<CustomMap, ObservableCollection<CustomPin>> (x => x.CustomPins, new ObservableCollection<CustomPin> (){ new CustomPin (){ Label = "test123" } });
+	  private Position _centerOnPosition;
 
-		public ObservableCollection<CustomPin> CustomPins {
+	  public ObservableCollection<CustomPin> CustomPins {
 			get{ return (ObservableCollection<CustomPin>)base.GetValue (CustomPinsProperty); }
 			set{ base.SetValue (CustomPinsProperty, value); }
 		}
+
+	  public int CameraFocusYOffset { get; set; }
 	}
 }
