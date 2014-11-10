@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using System.Linq;
+using System;
 
 namespace Core.Helpers.Controls
 {
@@ -12,24 +13,36 @@ namespace Core.Helpers.Controls
 
 		}
 
+		public Position CenterOnPosition {
+			get { return _centerOnPosition; }
+			set {
+				_centerOnPosition = value;
+				OnPropertyChanged ();
+			}
+		}
 
-    public Position CenterOnPosition
-    {
-      get { return _centerOnPosition; }
-      set
-      {
-        _centerOnPosition = value;
-        OnPropertyChanged();
-      }
-    }
-
-	  public static readonly BindableProperty SelectedPinAddressProperty = BindableProperty.Create<CustomMap, string> (x => x.SelectedPinAddress, string.Empty);
+		string _selectedPinAddress;
 
 		public string SelectedPinAddress {
-			get{ return (string)base.GetValue (SelectedPinAddressProperty); }
+			get{ return _selectedPinAddress; }
 			set {
-				base.SetValue (SelectedPinProperty, CustomPins.FirstOrDefault (x => x.Address.Equals (value)) as CustomPin); 		
-				base.SetValue (SelectedPinAddressProperty, value);
+				_selectedPinAddress = value;
+
+				var selectedPin = CustomPins.FirstOrDefault (x => x.Address.Equals (value)) as CustomPin;
+
+				var parent = this.Parent.Parent as CustomMapContentView;
+
+				if (parent == null)
+					throw new Exception ("Not able to retrieve the parent of the CustomMap");
+
+				//Set the Expanded to Expanded (otherwise for some reason the footer minimizes)
+				if (parent.FooterMode == FooterMode.Expanded) {
+					parent.FooterMode = FooterMode.Expanded;
+				}
+
+				CenterOnPosition = selectedPin.Position;
+
+				base.SetValue (SelectedPinProperty, selectedPin);
 			}
 		}
 
@@ -37,17 +50,16 @@ namespace Core.Helpers.Controls
 
 		public CustomPin SelectedPin {
 			get { return (CustomPin)base.GetValue (SelectedPinProperty); }
-			set{ base.SetValue (SelectedPinAddressProperty, value); }
 		}
 
 		public static readonly BindableProperty CustomPinsProperty = BindableProperty.Create<CustomMap, ObservableCollection<CustomPin>> (x => x.CustomPins, new ObservableCollection<CustomPin> (){ new CustomPin (){ Label = "test123" } });
-	  private Position _centerOnPosition;
+		private Position _centerOnPosition;
 
-	  public ObservableCollection<CustomPin> CustomPins {
+		public ObservableCollection<CustomPin> CustomPins {
 			get{ return (ObservableCollection<CustomPin>)base.GetValue (CustomPinsProperty); }
 			set{ base.SetValue (CustomPinsProperty, value); }
 		}
 
-	  public int CameraFocusYOffset { get; set; }
+		public int CameraFocusYOffset { get; set; }
 	}
 }

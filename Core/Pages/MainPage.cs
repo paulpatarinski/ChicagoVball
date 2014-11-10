@@ -19,8 +19,8 @@ namespace Core.Pages
 			BackgroundColor = Color.White;
 
 			//Coordinates for the starting point of the map
-			const double latitude = 41.975033;
-			const double longitude = -87.879058;
+			const double latitude = 41.788081;
+			const double longitude = -87.831573;
 
 			var location = new Position (latitude, longitude);
 

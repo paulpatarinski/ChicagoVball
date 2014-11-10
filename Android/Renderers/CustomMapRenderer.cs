@@ -9,120 +9,112 @@ using Core.Helpers.Controls;
 
 namespace Android
 {
-  public class CustomMapRenderer : MapRenderer
-  {
-    private bool _isDrawnDone;
-    private Marker _previouslySelectedMarker { get; set; }
-    private CustomPin _previouslySelectedPin { get; set; }
-    
-    private CustomMap _customMap
-    {
-      get { return Element as CustomMap; }
-    }
+	public class CustomMapRenderer : MapRenderer
+	{
+		private bool _isDrawnDone;
 
-    private CustomMapContentView _customMapContentView
-    {
-      get { return _customMap.Parent.Parent as CustomMapContentView; }
-    }
+		private Marker _previouslySelectedMarker { get; set; }
 
-    protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-      //base.OnElementPropertyChanged (sender, e);
+		private CustomPin _previouslySelectedPin { get; set; }
 
-      var androidMapView = (MapView) Control;
+		private CustomMap _customMap {
+			get { return Element as CustomMap; }
+		}
 
-      if (e.PropertyName.Equals("CenterOnPosition"))
-      {
-        CenterOnLocation(new LatLng(_customMap.CenterOnPosition.Latitude, _customMap.CenterOnPosition.Longitude),
-          _customMap.CameraFocusYOffset);
-      }
+		private CustomMapContentView _customMapContentView {
+			get { return _customMap.Parent.Parent as CustomMapContentView; }
+		}
 
-      if (e.PropertyName.Equals("VisibleRegion") && !_isDrawnDone)
-      {
-        androidMapView.Map.Clear();
+		protected override void OnElementPropertyChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			var androidMapView = (MapView)Control;
 
-        androidMapView.Map.MarkerClick += HandleMarkerClick;
-        androidMapView.Map.MapClick += HandleMapClick;
-        androidMapView.Map.MyLocationEnabled = _customMap.IsShowingUser;
+			if (e.PropertyName.Equals ("CenterOnPosition")) {
+				CenterOnLocation (new LatLng (_customMap.CenterOnPosition.Latitude, _customMap.CenterOnPosition.Longitude),
+					_customMap.CameraFocusYOffset);
+			}
 
-        //The footer overlays the zoom controls
-        androidMapView.Map.UiSettings.ZoomControlsEnabled = false;
+			if (e.PropertyName.Equals ("VisibleRegion") && !_isDrawnDone) {
+				androidMapView.Map.Clear ();
 
-        var formsPins = _customMap.CustomPins;
+				androidMapView.Map.MarkerClick += HandleMarkerClick;
+				androidMapView.Map.MapClick += HandleMapClick;
+				androidMapView.Map.MyLocationEnabled = _customMap.IsShowingUser;
 
-        foreach (var formsPin in formsPins)
-        {
-          var markerWithIcon = new MarkerOptions();
+				//The footer overlays the zoom controls
+				androidMapView.Map.UiSettings.ZoomControlsEnabled = false;
 
+				var formsPins = _customMap.CustomPins;
 
-          markerWithIcon.SetPosition(new LatLng(formsPin.Position.Latitude, formsPin.Position.Longitude));
-          markerWithIcon.SetTitle(formsPin.Label);
-          markerWithIcon.SetSnippet(formsPin.Address);
+				foreach (var formsPin in formsPins) {
+					var markerWithIcon = new MarkerOptions ();
 
-          if (!string.IsNullOrEmpty(formsPin.PinIcon))
-            markerWithIcon.InvokeIcon(BitmapDescriptorFactory.FromAsset(String.Format("{0}.png", formsPin.PinIcon)));
-          else
-            markerWithIcon.InvokeIcon(BitmapDescriptorFactory.DefaultMarker());
+					markerWithIcon.SetPosition (new LatLng (formsPin.Position.Latitude, formsPin.Position.Longitude));
+					markerWithIcon.SetTitle (formsPin.Label);
+					markerWithIcon.SetSnippet (formsPin.Address);
 
-          androidMapView.Map.AddMarker(markerWithIcon);
-        }
+					if (!string.IsNullOrEmpty (formsPin.PinIcon))
+						markerWithIcon.InvokeIcon (BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", formsPin.PinIcon)));
+					else
+						markerWithIcon.InvokeIcon (BitmapDescriptorFactory.DefaultMarker ());
 
-        _isDrawnDone = true;
-      }
-    }
+					androidMapView.Map.AddMarker (markerWithIcon);
+				}
 
-    private void HandleMapClick(object sender, GoogleMap.MapClickEventArgs e)
-    {
-      _customMapContentView.FooterMode = FooterMode.Hidden;
+				_isDrawnDone = true;
+			}
+		}
 
-      ResetPrevioslySelectedMarker();
-    }
+		private void HandleMapClick (object sender, GoogleMap.MapClickEventArgs e)
+		{
+			_customMapContentView.FooterMode = FooterMode.Hidden;
 
-    private void ResetPrevioslySelectedMarker()
-    {
-      //todo : This should reset to the default icon for the pin (right now the icon is hard coded)
-      if (_previouslySelectedMarker != null)
-      {
-        _previouslySelectedMarker.SetIcon(
-          BitmapDescriptorFactory.FromAsset(String.Format("{0}.png", _previouslySelectedPin.PinIcon)));
-        _previouslySelectedMarker = null;
-      }
-    }
+			ResetPrevioslySelectedMarker ();
+		}
 
-    private void HandleMarkerClick(object sender, GoogleMap.MarkerClickEventArgs e)
-    {
-      ResetPrevioslySelectedMarker();
+		private void ResetPrevioslySelectedMarker ()
+		{
+			//todo : This should reset to the default icon for the pin (right now the icon is hard coded)
+			if (_previouslySelectedMarker != null) {
+				_previouslySelectedMarker.SetIcon (
+					BitmapDescriptorFactory.FromAsset (String.Format ("{0}.png", _previouslySelectedPin.PinIcon)));
+				_previouslySelectedMarker = null;
+			}
+		}
 
-      var currentMarker = e.Marker;
+		private void HandleMarkerClick (object sender, GoogleMap.MarkerClickEventArgs e)
+		{
+			ResetPrevioslySelectedMarker ();
 
-      CenterOnLocation(currentMarker.Position);
+			var currentMarker = e.Marker;
 
-      currentMarker.SetIcon(BitmapDescriptorFactory.DefaultMarker());
+//			CenterOnLocation (currentMarker.Position, _customMap.CameraFocusYOffset);
 
-      _customMap.SelectedPinAddress = currentMarker.Snippet;
+			currentMarker.SetIcon (BitmapDescriptorFactory.DefaultMarker ());
 
-      if (_customMapContentView.FooterMode == FooterMode.Hidden)
-      {
-        _customMapContentView.FooterMode = FooterMode.Minimized;
-      }
+			_customMap.SelectedPinAddress = currentMarker.Snippet;
 
-      _previouslySelectedPin = _customMap.SelectedPin;
-      _previouslySelectedMarker = currentMarker;
-    }
+			if (_customMapContentView.FooterMode == FooterMode.Hidden) {
+				_customMapContentView.FooterMode = FooterMode.Minimized;
+			}
 
-    private void CenterOnLocation(LatLng location, int yOffset = 100)
-    {
-      var mapView = (MapView) Control;
+			_previouslySelectedPin = _customMap.SelectedPin;
+			_previouslySelectedMarker = currentMarker;
+		}
 
-      var projection = mapView.Map.Projection;
+		private void CenterOnLocation (LatLng location, int yOffset = 100)
+		{
+			var mapView = (MapView)Control;
 
-      var screenLocation = projection.ToScreenLocation(location);
-      screenLocation.Y += yOffset;
+			var projection = mapView.Map.Projection;
 
-      var offsetTarget = projection.FromScreenLocation(screenLocation);
+			var screenLocation = projection.ToScreenLocation (location);
+			screenLocation.Y += yOffset;
 
-      // Animate to the calculated lat/lng
-      mapView.Map.AnimateCamera(CameraUpdateFactory.NewLatLng(offsetTarget));
-    }
-  }
+			var offsetTarget = projection.FromScreenLocation (screenLocation);
+
+			// Animate to the calculated lat/lng
+			mapView.Map.AnimateCamera (CameraUpdateFactory.NewLatLng (offsetTarget));
+		}
+	}
 }
