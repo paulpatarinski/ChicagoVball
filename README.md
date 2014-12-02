@@ -1,4 +1,4 @@
-Xamarin Forms - ChiVball
+Xamarin Forms - ChicagoVball
 ========
 
 An app that shows you places to play volleyball in Chicago and Suburbs
